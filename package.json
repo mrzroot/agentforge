@@ -38,6 +38,7 @@
     "watch": "tsc -w",
     "start": "node bin/agentforge.js",
     "test": "node test/test.js",
+    "benchmark": "node test/benchmark_tokens.js",
     "dev:ui": "node dist/cli/commands/ui.js"
   },
   "dependencies": {

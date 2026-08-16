@@ -1,0 +1,25 @@
+---
+description: Global project rules and architecture standards for agentforge
+globs: *
+alwaysApply: true
+---
+
+# agentforge Development Guidelines
+
+## 1. Core Principles
+- Write minimal, concise, and robust code. Avoid over-engineering (YAGNI).
+- Follow language idioms and leverage the standard library before third-party abstractions.
+- Never compromise on security, input validation, error handling, or accessibility.
+- Maintain existing style, patterns, and architectural conventions across edits.
+
+## 2. Architecture & Patterns
+- Keep modules focused, decoupled, and single-responsibility.
+- Colocate tests, types, and documentation with the corresponding modules.
+
+## 3. Security Requirements
+- Never hardcode API keys, secrets, credentials, or private tokens in source code or rules.
+- Sanitize and validate all external inputs, request payloads, and query parameters.
+
+## 4. Testing Protocols
+- Ensure all new features, edge cases, and bug fixes have automated test coverage.
+- Keep tests deterministic, isolated, and fast.

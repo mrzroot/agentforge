@@ -1,0 +1,70 @@
+version: 1.0.0
+name: agentforge
+description: AI-assisted modern codebase powered by AgentForge
+targets:
+  - cursor
+  - claude
+  - windsurf
+  - antigravity
+  - copilot
+stack:
+  languages:
+    - TypeScript
+    - JavaScript
+  frameworks:
+    - Express
+  packageManager: npm
+  testRunner: node test/test.js
+rules:
+  core:
+    - Write minimal, concise, and robust code. Avoid over-engineering (YAGNI).
+    - Follow language idioms and leverage the standard library before
+      third-party abstractions.
+    - Never compromise on security, input validation, error handling, or
+      accessibility.
+    - Maintain existing style, patterns, and architectural conventions across
+      edits.
+  architecture:
+    - Keep modules focused, decoupled, and single-responsibility.
+    - Colocate tests, types, and documentation with the corresponding modules.
+  security:
+    - Never hardcode API keys, secrets, credentials, or private tokens in source
+      code or rules.
+    - Sanitize and validate all external inputs, request payloads, and query
+      parameters.
+  testing:
+    - Ensure all new features, edge cases, and bug fixes have automated test
+      coverage.
+    - Keep tests deterministic, isolated, and fast.
+  git:
+    - Follow Conventional Commits format (feat, fix, refactor, docs, chore).
+    - Keep pull requests and commits small, atomic, and focused.
+skills:
+  - name: tdd-architect
+    enabled: true
+  - name: security-auditor
+    enabled: true
+  - name: minimalist-architect
+    enabled: true
+compression:
+  include:
+    - src/**/*
+    - lib/**/*
+    - app/**/*
+    - pkg/**/*
+  exclude:
+    - node_modules/**
+    - dist/**
+    - build/**
+    - .git/**
+    - "*.lock"
+    - "*.min.js"
+  skeletonize:
+    - "*.ts"
+    - "*.js"
+    - "*.py"
+    - "*.go"
+    - "*.rs"
+    - "*.php"
+    - "*.cs"
+  maxFileTokens: 2500
