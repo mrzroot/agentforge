@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AgentForge - Universal AI Coding Agent OS & Toolkit</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #090d16;
+      --card-bg: rgba(18, 24, 38, 0.7);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --accent: #6366f1;
+      --accent-glow: rgba(99, 102, 241, 0.25);
+      --cyan: #06b6d4;
+      --emerald: #10b981;
+      --rose: #f43f5e;
+      --amber: #f59e0b;
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* Ambient Glow */
+    .glow {
+      position: fixed;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      filter: blur(140px);
+      z-index: 0;
+      pointer-events: none;
+    }
+    .glow-1 { top: -200px; left: -100px; background: rgba(99, 102, 241, 0.15); }
+    .glow-2 { bottom: -200px; right: -100px; background: rgba(6, 182, 212, 0.12); }
+
+    header {
+      position: sticky;
+      top: 0;
+      backdrop-filter: blur(16px);
+      background: rgba(9, 13, 22, 0.8);
+      border-bottom: 1px solid var(--card-border);
+      padding: 16px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 50;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      font-size: 1.3rem;
+      letter-spacing: -0.5px;
+    }
+    .brand-badge {
+      background: linear-gradient(135deg, var(--accent), var(--cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .pill {
+      font-size: 0.75rem;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(99, 102, 241, 0.15);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      color: #a5b4fc;
+      font-weight: 600;
+    }
+
+    .nav-tabs {
+      display: flex;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.03);
+      padding: 4px;
+      border-radius: 12px;
+      border: 1px solid var(--card-border);
+    }
+    .tab-btn {
+      padding: 8px 16px;
+      border-radius: 8px;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .tab-btn.active {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 4px 12px var(--accent-glow);
+    }
+
+    main {
+      flex: 1;
+      max-width: 1300px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 32px;
+      position: relative;
+      z-index: 10;
+    }
+
+    .tab-content { display: none; }
+    .tab-content.active { display: block; animation: fadeIn 0.25s ease; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 24px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 24px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+    .card-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #6366f1, #4f46e5);
+      color: #fff;
+      box-shadow: 0 4px 14px var(--accent-glow);
+    }
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px var(--accent-glow);
+    }
+    .btn-success {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: #fff;
+    }
+    .btn-secondary {
+      background: rgba(255,255,255,0.06);
+      color: var(--text);
+      border: 1px solid var(--card-border);
+    }
+
+    /* Score Circle */
+    .score-box {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+    .score-circle {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      font-weight: 800;
+      background: conic-gradient(var(--emerald) calc(var(--score) * 1%), rgba(255,255,255,0.1) 0);
+      position: relative;
+    }
+    .score-inner {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Editor */
+    textarea {
+      width: 100%;
+      background: rgba(0,0,0,0.4);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 14px;
+      color: #e2e8f0;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.88rem;
+      resize: vertical;
+      min-height: 220px;
+    }
+    textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    /* Target Badges */
+    .target-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--card-border);
+      margin: 4px;
+      font-size: 0.85rem;
+      cursor: pointer;
+    }
+    .target-badge.selected {
+      background: rgba(99, 102, 241, 0.2);
+      border-color: var(--accent);
+      color: #c7d2fe;
+    }
+
+    /* Stats Grid */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .stat-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 12px;
+      text-align: center;
+    }
+    .stat-num {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--cyan);
+    }
+    .stat-lbl {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .issue-item {
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      border-left: 4px solid var(--accent);
+      background: rgba(255,255,255,0.02);
+      font-size: 0.88rem;
+    }
+    .issue-CRITICAL { border-left-color: var(--rose); }
+    .issue-WARNING { border-left-color: var(--amber); }
+    .issue-INFO { border-left-color: var(--cyan); }
+  </style>
+</head>
+<body>
+  <div class="glow glow-1"></div>
+  <div class="glow glow-2"></div>
+
+  <header>
+    <div class="brand">
+      <span>⚡</span>
+      <span class="brand-badge">AgentForge</span>
+      <span class="pill">v1.0.0</span>
+    </div>
+    <div class="nav-tabs">
+      <button class="tab-btn active" onclick="showTab('sync')">🔄 Multi-Agent Sync</button>
+      <button class="tab-btn" onclick="showTab('compress')">⚡ Token Compressor</button>
+      <button class="tab-btn" onclick="showTab('lint')">🛡️ Rule Linter</button>
+      <button class="tab-btn" onclick="showTab('skills')">🧩 Skills Library</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- TAB 1: SYNC -->
+    <div id="tab-sync" class="tab-content active">
+      <div class="grid-2">
+        <div class="card">
+          <h2 class="card-title">🎯 Target AI Agents</h2>
+          <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:16px;">
+            Select the agent platforms you want to compile and synchronize rules for:
+          </p>
+          <div id="target-list" style="margin-bottom:20px;">
+            <div class="target-badge selected" data-agent="cursor">🎯 Cursor (.cursorrules / .mdc)</div>
+            <div class="target-badge selected" data-agent="claude">🧠 Claude Code (CLAUDE.md)</div>
+            <div class="target-badge selected" data-agent="windsurf">🏄 Windsurf (.windsurfrules)</div>
+            <div class="target-badge selected" data-agent="antigravity">🛸 Google Antigravity (.agents/)</div>
+            <div class="target-badge selected" data-agent="copilot">🤖 GitHub Copilot</div>
+            <div class="target-badge selected" data-agent="aider">🦙 Aider</div>
+            <div class="target-badge selected" data-agent="cline">🦘 Roo Code / Cline</div>
+          </div>
+          <button class="btn btn-primary" onclick="triggerSync()">🚀 Sync All Rules Now</button>
+          <div id="sync-result" style="margin-top:16px; font-size:0.88rem;"></div>
+        </div>
+
+        <div class="card">
+          <h2 class="card-title">📝 Core Project Rules</h2>
+          <textarea id="rules-input" placeholder="Loading rules..."></textarea>
+          <div style="margin-top:12px; display:flex; justify-content:flex-end;">
+            <button class="btn btn-secondary" onclick="saveRules()">💾 Save Config</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: COMPRESSOR -->
+    <div id="tab-compress" class="tab-content">
+      <div class="grid-2">
+        <div class="card">
+          <h2 class="card-title">📥 Full Implementation Code</h2>
+          <textarea id="raw-code" placeholder="Paste full source code (Python, TS, Go, Rust, etc.) here to test AST skeleton reduction..."></textarea>
+          <div style="margin-top:12px;">
+            <button class="btn btn-primary" onclick="compressCode()">⚡ Compress & Extract AST Skeleton</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2 class="card-title">📤 Token-Optimized Context Skeleton</h2>
+          <textarea id="compressed-code" readonly placeholder="Compressed AST skeleton will appear here..."></textarea>
+          <div class="stats-row" id="compress-stats">
+            <div class="stat-card">
+              <div class="stat-num" id="stat-saved">0%</div>
+              <div class="stat-lbl">Tokens Saved</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-num" id="stat-orig">0</div>
+              <div class="stat-lbl">Original Tokens</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-num" id="stat-comp">0</div>
+              <div class="stat-lbl">New Tokens</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: LINTER -->
+    <div id="tab-lint" class="tab-content">
+      <div class="card">
+        <div class="score-box">
+          <div class="score-circle" id="score-circle" style="--score: 95;">
+            <div class="score-inner" id="score-val">95%</div>
+          </div>
+          <div>
+            <h2 style="font-size:1.4rem; font-weight:800;">Agent Context & Rule Health</h2>
+            <p style="color:var(--text-muted); font-size:0.9rem;">Automated security, conflict, and prompt clarity evaluation.</p>
+          </div>
+          <button class="btn btn-secondary" style="margin-left:auto;" onclick="runLinter()">🔍 Re-scan</button>
+        </div>
+        <div id="issues-list"></div>
+      </div>
+    </div>
+
+    <!-- TAB 4: SKILLS -->
+    <div id="tab-skills" class="tab-content">
+      <div class="card">
+        <h2 class="card-title">🧩 Agent Skills Marketplace</h2>
+        <div id="skills-grid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:16px; margin-top:16px;">
+          <!-- Injected via JS -->
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    function showTab(id) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      event.target.classList.add('active');
+      document.getElementById('tab-' + id).classList.add('active');
+    }
+
+    async function loadData() {
+      try {
+        const res = await fetch('/api/config');
+        const data = await res.json();
+        if (data.config) {
+          document.getElementById('rules-input').value = data.config.rules.core.join('\n');
+        }
+      } catch (e) {}
+
+      runLinter();
+      loadSkills();
+    }
+
+    async function triggerSync() {
+      const res = await fetch('/api/sync', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ targets: ['cursor', 'claude', 'windsurf', 'antigravity', 'copilot', 'aider', 'cline'] })
+      });
+      const data = await res.json();
+      if (data.success) {
+        document.getElementById('sync-result').innerHTML = `<span style="color:var(--emerald)">✔ Successfully synchronized ${data.result.totalFiles} files across all agents!</span>`;
+      }
+    }
+
+    async function compressCode() {
+      const code = document.getElementById('raw-code').value;
+      if (!code) return;
+      const res = await fetch('/api/compress', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code, filename: 'app.ts' })
+      });
+      const data = await res.json();
+      if (data.success) {
+        document.getElementById('compressed-code').value = data.skeleton.skeletonCode;
+        document.getElementById('stat-saved').innerText = data.stats.savingsPercentage + '%';
+        document.getElementById('stat-orig').innerText = data.stats.originalTokens;
+        document.getElementById('stat-comp').innerText = data.stats.compressedTokens;
+      }
+    }
+
+    async function runLinter() {
+      const res = await fetch('/api/lint');
+      const data = await res.json();
+      if (data.success && data.report) {
+        const r = data.report;
+        document.getElementById('score-circle').style.setProperty('--score', r.score);
+        document.getElementById('score-val').innerText = r.score + '%';
+        
+        let html = '';
+        if (r.issues.length === 0) {
+          html = '<p style="color:var(--emerald)">✔ Zero issues found! Your agent rules are perfectly optimized.</p>';
+        } else {
+          r.issues.forEach(iss => {
+            html += `<div class="issue-item issue-${iss.severity}">
+              <strong>[${iss.severity}] ${iss.category}</strong>: ${iss.message}<br>
+              <span style="color:var(--text-muted); font-size:0.8rem;">💡 Fix: ${iss.suggestion}</span>
+            </div>`;
+          });
+        }
+        document.getElementById('issues-list').innerHTML = html;
+      }
+    }
+
+    async function loadSkills() {
+      const res = await fetch('/api/skills');
+      const data = await res.json();
+      if (data.success) {
+        let html = '';
+        data.available.forEach(s => {
+          html += `<div style="background:rgba(255,255,255,0.03); border:1px solid var(--card-border); border-radius:12px; padding:16px;">
+            <h3 style="font-size:1rem; font-weight:700; margin-bottom:6px;">${s.name}</h3>
+            <p style="color:var(--text-muted); font-size:0.82rem; margin-bottom:12px;">${s.description}</p>
+            <span class="pill">${s.category}</span>
+          </div>`;
+        });
+        document.getElementById('skills-grid').innerHTML = html;
+      }
+    }
+
+    window.onload = loadData;
+  </script>
+</body>
+</html>

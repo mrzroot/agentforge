@@ -1,0 +1,59 @@
+{
+  "name": "agentforge",
+  "version": "1.0.0",
+  "description": "The Universal AI Coding Agent Toolkit & OS. Sync rules across Cursor, Claude Code, Windsurf, Antigravity, Copilot, Roo, & Aider + 85% Token Compressor + Rule Linter + 50+ Agent Skills.",
+  "main": "dist/index.js",
+  "bin": {
+    "agentforge": "./bin/agentforge.js",
+    "af": "./bin/agentforge.js"
+  },
+  "keywords": [
+    "ai",
+    "agents",
+    "cursor",
+    "claude-code",
+    "windsurf",
+    "antigravity",
+    "copilot",
+    "aider",
+    "llm",
+    "token-optimization",
+    "context-compression",
+    "agent-rules",
+    "prompt-engineering",
+    "developer-tools"
+  ],
+  "author": "MRZ <mrzroot@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mrzroot/agentforge.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mrzroot/agentforge/issues"
+  },
+  "homepage": "https://github.com/mrzroot/agentforge#readme",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "start": "node bin/agentforge.js",
+    "test": "node test/test.js",
+    "dev:ui": "node dist/cli/commands/ui.js"
+  },
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "commander": "^11.1.0",
+    "express": "^4.19.2",
+    "glob": "^10.3.10",
+    "yaml": "^2.3.4"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/glob": "^8.1.0",
+    "@types/node": "^20.11.24",
+    "typescript": "^5.3.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
