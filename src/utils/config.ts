@@ -50,7 +50,7 @@ export const DEFAULT_CONFIG: AgentForgeConfig = {
   skills: [
     { name: 'tdd-architect', enabled: true },
     { name: 'security-auditor', enabled: true },
-    { name: 'ponytail-minimalist', enabled: true }
+    { name: 'minimalist-architect', enabled: true }
   ],
   compression: {
     include: ['src/**/*', 'lib/**/*', 'app/**/*', 'pkg/**/*'],

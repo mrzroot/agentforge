@@ -39,7 +39,7 @@ AgentForge acts as the **Universal Operating System** for your AI workflow:
 - 🔄 **One-Command Multi-Agent Sync**: Edit rules once in `.agentforge.yaml` $\to$ automatically compiles to all 7+ agent formats.
 - ⚡ **Token-Killer AST Skeletonizer**: Shrinks codebases into AST signature skeletons, saving **80% - 90%** of prompt tokens.
 - 🛡️ **Rule & Prompt Linter**: Audits rules for security vulnerabilities, exposed API keys, prompt conflicts, and bloat.
-- 🧩 **Built-in Skills Marketplace**: 1-click install modular capabilities (`tdd-architect`, `security-auditor`, `ponytail-minimalist`, `fastapi-master`, etc.).
+- 🧩 **Built-in Skills Marketplace**: 1-click install modular capabilities (`tdd-architect`, `security-auditor`, `minimalist-architect`, `fastapi-master`, etc.).
 - 🎨 **Visual Web Studio & TUI**: Interactive Terminal UI and local dark-mode glassmorphism web dashboard.
 
 ---
@@ -127,7 +127,7 @@ Installs battle-tested personas and skills directly into your agent instructions
 agentforge skills list
 agentforge skills add tdd-architect
 agentforge skills add security-auditor
-agentforge skills add ponytail-minimalist
+agentforge skills add minimalist-architect
 ```
 
 ### 5. `agentforge ui`
@@ -141,7 +141,7 @@ Launches the interactive Web Studio on `http://localhost:3737`:
 
 ## 🧩 Curated Skills Library
 
-- 🧠 `ponytail-minimalist`: Enforces minimalist senior dev philosophy (YAGNI, standard library first, zero bloat).
+- 🧠 `minimalist-architect`: Enforces minimalist senior dev philosophy (YAGNI, standard library first, zero bloat).
 - 🧪 `tdd-architect`: Strict Test-Driven Development (Red-Green-Refactor) with boundary isolation.
 - 🛡️ `security-auditor`: OWASP Top 10 hardening, input sanitization, and SQL injection prevention.
 - ⚡ `token-optimizer`: Context window management and prompt payload compression.

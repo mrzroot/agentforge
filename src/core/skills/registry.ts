@@ -8,8 +8,8 @@ export interface AgentSkill {
 
 export const SKILLS_REGISTRY: AgentSkill[] = [
   {
-    id: 'ponytail-minimalist',
-    name: 'Ponytail Minimalist Dev',
+    id: 'minimalist-architect',
+    name: 'Minimalist Senior Architect',
     category: 'architecture',
     description: 'Forces concise, standard-library-first code. Avoids over-engineering and boilerplate.',
     rules: [
