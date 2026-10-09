@@ -34,8 +34,8 @@
   },
   "homepage": "https://github.com/mrzroot/agentforge#readme",
   "scripts": {
-    "build": "tsc",
-    "prepare": "tsc",
+    "build": "tsc && node -e \"require('fs').cpSync('src/server/public','dist/server/public',{recursive:true})\"",
+    "prepare": "npm run build",
     "watch": "tsc -w",
     "start": "node bin/agentforge.js",
     "test": "node test/test.js",
