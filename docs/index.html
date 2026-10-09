@@ -1,0 +1,547 @@
+<!doctype html>
+<html lang="en" data-lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentForge · Forge your AI agent rules once, for every agent</title>
+<meta name="description" content="AgentForge compiles one .agentforge.yaml into rules for Cursor, Claude Code, Windsurf, Antigravity, Copilot, Aider and Cline, packs your code into token-light AST skeletons, lints rules for leaked secrets and ships 7 built-in skills. MIT, runs locally.">
+<meta name="theme-color" content="#0b0806">
+<meta name="color-scheme" content="dark">
+<meta property="og:title" content="AgentForge · ایجنت‌فورج">
+<meta property="og:description" content="One rules file. Seven AI coding agents. Token-light context packs, a rule linter and 7 built-in skills.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://mrzroot.github.io/agentforge/">
+<meta property="og:image" content="https://mrzroot.github.io/agentforge/studio.png">
+<link rel="canonical" href="https://mrzroot.github.io/agentforge/">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<script>(function(){var d=document.documentElement,l='en';try{l=new URLSearchParams(location.search).get('lang')||localStorage.getItem('mrz-lang')||'en'}catch(e){}if(l==='fa'){d.lang='fa';d.dir='rtl';d.setAttribute('data-lang','fa')}})()</script>
+<style>
+@font-face{font-family:Vazirmatn;src:url(fonts/vazirmatn-arabic.woff2) format('woff2');font-weight:400 800;font-display:swap;unicode-range:U+0600-06FF,U+0750-077F,U+200C-200E,U+FB50-FDFF,U+FE70-FEFC}
+:root{--bg:#0b0806;--bg2:#120d09;--panel:#16100b;--panel2:#1d150f;--line:#2c2017;--line2:#3d2c1f;--fg:#f6ede4;--mut:#b09c8b;--dim:#7a6758;
+--molt:#ff6a1a;--amb:#ffb020;--hot:#ff3d00;--steel:#a6b0ba;--ok:#8be36b;--bad:#ff5f56;--info:#7cc7ff;
+--sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,Vazirmatn,sans-serif;--fa:Vazirmatn,"Segoe UI",Tahoma,sans-serif;--mono:ui-monospace,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace}
+*{box-sizing:border-box}html{scroll-behavior:smooth;background:var(--bg)}
+body{margin:0;color:var(--fg);font:16px/1.65 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+html[data-lang=fa] body{font-family:var(--fa);line-height:1.9}
+html[data-lang=en] [lang=fa],html[data-lang=fa] [lang=en]{display:none!important}
+a{color:var(--amb);text-decoration:none}a:hover{text-decoration:underline}
+code,.mono,pre{font-family:var(--mono)}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+#embers{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:.75}
+main,header,footer{position:relative;z-index:1}
+/* header */
+.top{position:sticky;top:0;z-index:20;background:rgba(11,8,6,.78);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:18px;height:62px}
+.brand{display:flex;align-items:center;gap:10px;color:var(--fg);font-weight:900;letter-spacing:.06em;text-transform:uppercase;font-size:15px}
+.brand:hover{text-decoration:none}.brand img{width:30px;height:30px}
+.brand small{font:600 11px var(--mono);letter-spacing:0;color:var(--molt);border:1px solid var(--line2);padding:2px 7px;border-radius:4px;text-transform:none}
+.top nav{margin-inline-start:auto;display:flex;align-items:center;gap:20px;font-size:14px}
+.top nav a{color:var(--mut)}.top nav a:hover{color:var(--fg);text-decoration:none}
+.lang{display:flex;border:1px solid var(--line2);border-radius:6px;overflow:hidden}
+.lang button{background:none;border:0;color:var(--mut);font:700 12px var(--sans);padding:6px 10px;cursor:pointer}
+.lang button[aria-pressed=true]{background:var(--molt);color:#1a0b02}
+.gh{border:1px solid var(--line2);padding:6px 12px;border-radius:6px;color:var(--fg)!important}
+/* hero */
+.hero{padding:76px 0 90px;position:relative}
+.hero:before{content:"";position:absolute;inset:auto 0 -120px;height:520px;background:radial-gradient(60% 60% at 70% 80%,rgba(255,106,26,.22),transparent 70%);pointer-events:none}
+.hero .wrap{display:grid;grid-template-columns:1fr 1.08fr;gap:54px;align-items:center}
+.hero .wrap>*{min-width:0}
+.tag{display:inline-flex;gap:10px;align-items:center;font:600 12px var(--mono);color:var(--amb);border:1px solid var(--line2);background:var(--panel);padding:6px 12px;border-radius:4px;letter-spacing:.04em}
+.tag i{width:8px;height:8px;border-radius:50%;background:var(--molt);box-shadow:0 0 12px var(--molt);font-style:normal}
+h1{font-size:clamp(40px,5.6vw,72px);line-height:.98;margin:22px 0 22px;font-weight:900;letter-spacing:-.035em;text-transform:uppercase}
+html[data-lang=fa] h1{text-transform:none;letter-spacing:0;line-height:1.3;font-size:clamp(34px,4.6vw,58px)}
+.hot{background:linear-gradient(180deg,#ffd27a 0%,var(--amb) 30%,var(--molt) 65%,var(--hot) 100%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 22px rgba(255,106,26,.35))}
+.lead{font-size:18px;color:var(--mut);max-width:560px;margin:0 0 30px}.lead b{color:var(--fg)}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:24px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 20px;border-radius:6px;font-weight:800;font-size:15px;border:1px solid var(--line2);color:var(--fg);background:var(--panel)}
+.btn:hover{text-decoration:none;border-color:var(--molt)}
+.btn.p{background:linear-gradient(180deg,var(--amb),var(--molt));color:#1a0b02;border:0;box-shadow:0 8px 30px -8px rgba(255,106,26,.7)}
+.inst{display:flex;align-items:center;gap:10px;background:#070504;border:1px solid var(--line2);border-radius:6px;padding:10px 10px 10px 16px;max-width:520px}
+.inst code{flex:1;overflow-x:auto;white-space:nowrap;font-size:14px;color:var(--fg)}.inst .ps{color:var(--molt)}
+.copy{background:var(--panel2);border:1px solid var(--line2);color:var(--mut);font:600 12px var(--sans);padding:6px 10px;border-radius:4px;cursor:pointer;flex:none}
+.copy.ok{color:var(--ok);border-color:var(--ok)}
+.copy.ok:after{content:" ✓"}
+.hint{color:var(--dim);font-size:13px;margin-top:12px}
+/* anvil demo */
+.anvil{position:relative;background:linear-gradient(180deg,#1a120c,#0f0a07);border:1px solid var(--line2);border-radius:10px;box-shadow:0 40px 90px -30px rgba(0,0,0,.9),0 0 0 1px rgba(255,106,26,.05) inset;overflow:hidden}
+.anvil .bar{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--line);font:12px var(--mono);color:var(--dim)}
+.anvil .bar b{color:var(--mut);font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dots{display:flex;gap:6px}.dots i{width:10px;height:10px;border-radius:50%;background:#3a2a1e}
+.forge{margin-inline-start:auto;display:flex;gap:8px}
+.fbtn{background:linear-gradient(180deg,var(--amb),var(--molt));color:#1a0b02;border:0;font:800 12px var(--sans);padding:7px 14px;border-radius:5px;cursor:pointer;display:flex;align-items:center;gap:6px}
+.fbtn:disabled{opacity:.55;cursor:default}
+.ebtn{background:none;border:1px solid var(--line2);color:var(--mut);font:600 12px var(--sans);padding:6px 10px;border-radius:5px;cursor:pointer}
+.fbtn svg{width:14px;height:14px;transform-origin:80% 80%}
+.fbtn.strike svg{animation:strike .35s ease-in 3}
+@keyframes strike{0%{transform:rotate(0)}50%{transform:rotate(-40deg)}100%{transform:rotate(0)}}
+.abody{display:grid;grid-template-columns:1fr 1.1fr;gap:0;border-bottom:1px solid var(--line)}
+.abody>*{min-width:0}
+.src{padding:14px 14px;overflow:hidden;border-inline-end:1px solid var(--line);font:12px/1.65 var(--mono);color:var(--mut);position:relative;direction:ltr;text-align:left}
+.src .fn{color:var(--amb);font-size:11px;margin-bottom:6px;display:block}
+.src pre{margin:0;white-space:pre;overflow:hidden}
+.src .k{color:#ffcf8a}.src .s{color:#d9c2ad}.src .c{color:var(--dim)}
+.src.hit{animation:hit .5s}
+@keyframes hit{0%{background:rgba(255,106,26,.0)}20%{background:rgba(255,106,26,.25)}100%{background:rgba(255,106,26,0)}}
+.tg{list-style:none;margin:0;padding:8px 0}
+.tg li{display:flex;align-items:center;gap:10px;padding:6px 14px;font-size:13px;transition:background .3s}
+.tg li .ic{width:24px;height:24px;border-radius:5px;display:grid;place-items:center;font:800 11px var(--mono);background:#241911;color:var(--dim);border:1px solid var(--line2);flex:none;transition:all .3s}
+.tg li .nm{font-weight:700;color:var(--mut);transition:color .3s}
+.tg li .fl{margin-inline-start:auto;font:11px var(--mono);color:var(--dim);text-align:end;direction:ltr;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tg li.lit .ic{background:var(--molt);color:#1a0b02;border-color:var(--amb);box-shadow:0 0 16px rgba(255,106,26,.7)}
+.tg li.lit .nm{color:var(--fg)}.tg li.lit .fl{color:var(--amb)}
+.tg li.lit{background:linear-gradient(90deg,rgba(255,106,26,.12),transparent)}
+html[dir=rtl] .tg li.lit{background:linear-gradient(-90deg,rgba(255,106,26,.12),transparent)}
+.term{background:#070504;padding:12px 16px;height:206px;overflow:hidden;font:12px/1.7 var(--mono);color:#d8c8ba;direction:ltr;text-align:left}
+.term p{margin:0;white-space:pre}
+.term .ps{color:var(--molt)}.term .g{color:var(--ok)}.term .d{color:var(--dim)}.term .y{color:var(--amb)}.term .u{color:var(--info)}
+.term .cur:after{content:"▋";color:var(--molt);animation:bl 1s steps(1) infinite}
+@keyframes bl{50%{opacity:0}}
+#sparks{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+/* sections */
+section{padding:96px 0;position:relative}
+.eyebrow{font:700 12px var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--molt);display:flex;align-items:center;gap:10px}
+.eyebrow:before{content:"";width:26px;height:2px;background:var(--molt)}
+html[data-lang=fa] .eyebrow{letter-spacing:0;font-family:var(--fa);font-size:14px}
+h2{font-size:clamp(30px,3.8vw,48px);line-height:1.05;margin:14px 0 16px;font-weight:900;letter-spacing:-.025em;text-transform:uppercase}
+html[data-lang=fa] h2{text-transform:none;letter-spacing:0;line-height:1.35}
+.sub{color:var(--mut);font-size:17px;max-width:680px;margin:0 0 44px}
+.band{background:linear-gradient(180deg,var(--bg2),var(--bg));border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+/* drift */
+.drift{display:grid;grid-template-columns:1fr auto 1fr;gap:30px;align-items:center}
+.drift>*{min-width:0}
+.scatter{display:flex;flex-wrap:wrap;gap:10px}
+.scatter span{font:13px var(--mono);padding:8px 12px;border:1px dashed var(--line2);border-radius:5px;color:var(--mut);background:var(--panel);direction:ltr}
+.scatter span:nth-child(2n){transform:rotate(-2deg)}.scatter span:nth-child(3n){transform:rotate(2.5deg)}
+.arrow{font-size:46px;color:var(--molt);text-shadow:0 0 20px rgba(255,106,26,.6)}
+html[dir=rtl] .arrow{transform:scaleX(-1)}
+.one{background:var(--panel);border:1px solid var(--molt);border-radius:8px;padding:22px;box-shadow:0 0 50px -10px rgba(255,106,26,.45)}
+.one b{font:700 15px var(--mono);color:var(--amb);direction:ltr;display:block}
+.one p{color:var(--mut);margin:8px 0 0;font-size:15px}
+/* pack */
+.packg{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.packg>*{min-width:0}
+.code{background:#070504;border:1px solid var(--line2);border-radius:8px;overflow:hidden}
+.code .h{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-bottom:1px solid var(--line);font:12px var(--mono);color:var(--dim)}
+.code .h b{color:var(--fg);font-weight:600}
+.code .h em{font-style:normal;color:var(--amb)}
+.code pre{margin:0;padding:14px 16px;font-size:12.5px;line-height:1.7;overflow-x:auto;color:#d8c8ba;direction:ltr;text-align:left}
+.code .k{color:#ffb86b}.code .t{color:#7cc7ff}.code .c{color:#7a6758}.code .x{color:var(--molt);font-weight:700}
+.meter{margin-top:26px;background:var(--panel);border:1px solid var(--line2);border-radius:8px;padding:20px 22px;display:grid;grid-template-columns:auto 1fr auto;gap:22px;align-items:center}
+.meter>*{min-width:0}
+.meter .n{font:900 40px/1 var(--mono);color:var(--amb)}
+.meter .n small{font-size:14px;color:var(--mut);font-weight:500}
+.track{height:14px;background:#2a1d14;border-radius:3px;position:relative;overflow:hidden}
+.track i{position:absolute;inset-block:0;inset-inline-start:0;background:linear-gradient(90deg,var(--hot),var(--molt),var(--amb));width:100%;transition:width 1.6s cubic-bezier(.2,.8,.2,1);box-shadow:0 0 18px rgba(255,106,26,.6)}
+.track b{position:absolute;inset-block:0;inset-inline-start:0;width:100%;border-inline-end:2px dashed var(--steel);opacity:.45}
+.meter .lbl{font:12px var(--mono);color:var(--mut);margin-top:8px;display:flex;justify-content:space-between}
+.bench{margin-top:16px;color:var(--mut);font-size:14px}
+.bench b{color:var(--fg)}
+.langs{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.langs span{font:12px var(--mono);border:1px solid var(--line2);border-radius:4px;padding:3px 9px;color:var(--steel)}
+/* lint */
+.lintg{display:grid;grid-template-columns:300px 1fr;gap:34px;align-items:start}
+.lintg>*{min-width:0}
+.gauge{background:var(--panel);border:1px solid var(--line2);border-radius:10px;padding:24px;text-align:center}
+.gauge svg{width:180px;height:180px}
+.gauge .v{font:900 40px var(--mono);fill:var(--fg)}
+.gauge .s{font:11px var(--mono);fill:var(--mut);letter-spacing:.1em}
+.sc{display:grid;gap:8px;margin-top:14px;text-align:start;font-size:13px}
+.sc div{display:flex;justify-content:space-between;color:var(--mut);border-top:1px solid var(--line);padding-top:8px}.sc b{color:var(--ok);font-family:var(--mono)}
+.sev{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.sev>*{min-width:0}
+.sv{background:var(--panel);border:1px solid var(--line2);border-top:3px solid;border-radius:8px;padding:18px}
+.sv h3{margin:0 0 10px;font:800 13px var(--mono);letter-spacing:.1em}
+.sv ul{margin:0;padding-inline-start:18px;color:var(--mut);font-size:14px}.sv li{margin:5px 0}
+.sv.c{border-top-color:var(--bad)}.sv.c h3{color:var(--bad)}
+.sv.w{border-top-color:var(--amb)}.sv.w h3{color:var(--amb)}
+.sv.i{border-top-color:var(--info)}.sv.i h3{color:var(--info)}
+/* skills */
+.skills{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.skills>*{min-width:0}
+.sk{background:var(--panel);border:1px solid var(--line2);border-radius:8px;padding:20px;cursor:pointer;text-align:start;color:var(--fg);font:inherit;position:relative;overflow:hidden;transition:transform .2s,border-color .2s}
+.sk:hover{transform:translateY(-3px);border-color:var(--molt)}
+.sk:after{content:"";position:absolute;inset:auto -30% -60% auto;width:140px;height:140px;background:radial-gradient(circle,rgba(255,106,26,.18),transparent 70%)}
+.sk .cat{font:700 10.5px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--molt)}
+.sk h3{margin:8px 0 6px;font:700 15px var(--mono);color:var(--amb);direction:ltr;text-align:start}
+.sk p{margin:0;color:var(--mut);font-size:14px}
+.sk .ad{display:block;margin-top:12px;font:11px var(--mono);color:var(--dim);direction:ltr;text-align:start}
+.sk.ok .ad{color:var(--ok)}
+.sk.more{display:flex;flex-direction:column;justify-content:center;border-style:dashed;cursor:default}
+.sk.more:hover{transform:none;border-color:var(--line2)}
+/* targets */
+.tbl{width:100%;border-collapse:collapse;background:var(--panel);border:1px solid var(--line2);border-radius:8px;overflow:hidden;font-size:15px}
+.tbl th,.tbl td{padding:13px 18px;border-bottom:1px solid var(--line);text-align:start}
+.tbl th{font:700 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--dim);background:var(--panel2)}
+.tbl td code{color:var(--amb);font-size:13px}
+.tbl td:first-child{font-weight:700}
+.tbl tr:last-child td{border-bottom:0}
+.tblw{overflow-x:auto;border-radius:8px}
+.tbl td code{word-break:break-all}
+/* studio */
+.studio{display:grid;grid-template-columns:1fr 1.5fr;gap:44px;align-items:center}
+.studio>*{min-width:0}
+.win{border:1px solid var(--line2);border-radius:10px;overflow:hidden;box-shadow:0 40px 80px -30px #000,0 0 60px -20px rgba(255,106,26,.3)}
+.win .bar{display:flex;gap:6px;align-items:center;padding:9px 12px;background:var(--panel2);border-bottom:1px solid var(--line);font:12px var(--mono);color:var(--dim)}
+.win .bar span{margin-inline-start:10px}
+.win img{display:block;width:100%;height:auto}
+.list{list-style:none;padding:0;margin:20px 0 0}
+.list li{padding:9px 0 9px 28px;position:relative;color:var(--mut);border-bottom:1px solid var(--line)}
+html[dir=rtl] .list li{padding:9px 28px 9px 0}
+.list li:before{content:"⚒";position:absolute;inset-inline-start:0;color:var(--molt)}
+/* start */
+.tabs{display:flex;gap:6px;margin-bottom:-1px;flex-wrap:wrap}
+.tabs button{background:none;border:1px solid transparent;border-bottom:0;color:var(--mut);font:700 14px var(--sans);padding:10px 16px;border-radius:6px 6px 0 0;cursor:pointer}
+.tabs button[aria-selected=true]{background:#070504;border-color:var(--line2);color:var(--amb)}
+.startg{display:grid;grid-template-columns:1.25fr 1fr;gap:30px}
+.startg>*{min-width:0}
+.pane{background:#070504;border:1px solid var(--line2);border-radius:0 8px 8px 8px;position:relative}
+html[dir=rtl] .pane{border-radius:8px 0 8px 8px}
+.pane pre{margin:0;padding:20px 18px;font-size:13px;line-height:1.75;overflow-x:auto;color:#e6d6c8;direction:ltr;text-align:left}
+.pane pre .c{color:var(--dim)}
+.pane .copy{position:absolute;top:10px;inset-inline-end:10px}
+.ref{background:var(--panel);border:1px solid var(--line2);border-radius:8px;padding:6px 20px}
+.ref div{padding:12px 0;border-bottom:1px solid var(--line);display:grid;gap:3px}
+.ref div:last-child{border-bottom:0}
+.ref code{color:var(--amb);font-size:13px;direction:ltr;text-align:start}
+.ref span{color:var(--mut);font-size:14px}
+.warn{margin-top:18px;border-inline-start:3px solid var(--amb);background:rgba(255,176,32,.07);padding:12px 16px;border-radius:4px;color:var(--mut);font-size:14px}
+.warn b{color:var(--fg)}
+/* faq */
+.faq{max-width:860px}
+details{border-bottom:1px solid var(--line);padding:4px 0}
+summary{cursor:pointer;list-style:none;padding:18px 0;font-weight:800;font-size:17px;display:flex;justify-content:space-between;gap:20px}
+summary::-webkit-details-marker{display:none}
+summary:after{content:"+";color:var(--molt);font:400 26px/1 var(--mono);transition:transform .2s}
+details[open] summary:after{transform:rotate(45deg)}
+details p{margin:0 0 18px;color:var(--mut)}
+/* closing */
+.close{text-align:center;padding:110px 0}
+.close h2{font-size:clamp(34px,5vw,64px)}
+.close .cta{justify-content:center}
+footer{border-top:1px solid var(--line);padding:30px 0;color:var(--dim);font-size:14px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between}
+footer a{color:var(--mut)}
+.rv{opacity:0;transform:translateY(18px);transition:opacity .7s,transform .7s}.rv.in{opacity:1;transform:none}
+@media (max-width:980px){.hero .wrap,.studio,.startg,.lintg{grid-template-columns:minmax(0,1fr)}.skills{grid-template-columns:repeat(2,1fr)}.sev{grid-template-columns:minmax(0,1fr)}.drift{grid-template-columns:minmax(0,1fr)}.arrow{transform:rotate(90deg)!important;text-align:center}}
+@media (max-width:640px){.top nav a.h,.gh,.brand small{display:none}.hero{padding:44px 0 64px}section{padding:70px 0}.packg,.skills{grid-template-columns:minmax(0,1fr)}.abody{grid-template-columns:minmax(0,1fr)}.src{border-inline-end:0;border-bottom:1px solid var(--line);max-height:170px}.meter{grid-template-columns:minmax(0,1fr)}.meter .n{font-size:32px}.tbl th,.tbl td{padding:10px 12px;font-size:13px}.tbl th:nth-child(3),.tbl td:nth-child(3){display:none}.anvil .bar b{display:none}.term{font-size:10.5px;overflow-x:auto}}
+@media (prefers-reduced-motion:reduce){#embers{display:none}.rv{opacity:1;transform:none}*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<canvas id="embers" aria-hidden="true"></canvas>
+<header class="top"><div class="wrap">
+  <a class="brand" href="#"><img src="favicon.svg" alt="">AgentForge <small>v1.0.0</small></a>
+  <nav>
+    <a class="h" href="#pack"><span lang="en">Pack</span><span lang="fa">فشرده‌سازی</span></a>
+    <a class="h" href="#lint"><span lang="en">Lint</span><span lang="fa">لینتر</span></a>
+    <a class="h" href="#skills"><span lang="en">Skills</span><span lang="fa">مهارت‌ها</span></a>
+    <a href="#start"><span lang="en">Quick start</span><span lang="fa">شروع سریع</span></a>
+    <a class="h" href="#faq"><span lang="en">FAQ</span><span lang="fa">پرسش‌ها</span></a>
+    <a class="gh" href="https://github.com/mrzroot/agentforge">GitHub</a>
+    <div class="lang" role="group" aria-label="Language"><button type="button" data-set-lang="en">EN</button><button type="button" data-set-lang="fa">فا</button></div>
+  </nav>
+</div></header>
+
+<main>
+<section class="hero"><div class="wrap">
+  <div>
+    <span class="tag"><i></i><span lang="en">MIT · Node 18+ · runs 100% locally</span><span lang="fa">MIT · Node 18+ · کاملاً محلی</span></span>
+    <h1><span lang="en">Write the rules once.<br><span class="hot">Forge them for every agent.</span></span><span lang="fa">قوانین را یک بار بنویسید.<br><span class="hot">برای همهٔ ایجنت‌ها بسازید.</span></span></h1>
+    <p class="lead"><span lang="en">AgentForge turns one <b>.agentforge.yaml</b> into native rule files for <b>Cursor, Claude Code, Windsurf, Antigravity, Copilot, Aider and Cline</b>, packs your code into token-light AST skeletons, lints your rules for leaked keys and dangerous directives, and ships 7 built-in skills.</span><span lang="fa">ایجنت‌فورج یک فایل <b>‎.agentforge.yaml</b> را به فایل‌های قانون بومیِ <b>Cursor، Claude Code، Windsurf، Antigravity، Copilot، Aider و Cline</b> تبدیل می‌کند، کدتان را به اسکلت‌های AST کم‌توکن فشرده می‌کند، قوانین را برای کلیدهای لورفته و دستورهای خطرناک بررسی می‌کند و ۷ مهارت آماده دارد.</span></p>
+    <div class="cta">
+      <a class="btn p" href="#start"><span lang="en">Start forging →</span><span lang="fa">شروع کنید ←</span></a>
+      <a class="btn" href="https://github.com/mrzroot/agentforge">GitHub</a>
+      <a class="btn" href="#demo"><span lang="en">Watch it sync</span><span lang="fa">تماشای همگام‌سازی</span></a>
+    </div>
+    <div class="inst"><code id="c-hero"><span class="ps">$ </span>npx github:mrzroot/agentforge init</code><button class="copy" type="button" data-copy="c-hero" data-strip="$ "><span lang="en">Copy</span><span lang="fa">کپی</span></button></div>
+    <p class="hint"><span lang="en">Not on npm yet: it runs straight from GitHub and builds on install.</span><span lang="fa">هنوز در npm منتشر نشده؛ مستقیم از گیت‌هاب اجرا و هنگام نصب ساخته می‌شود.</span></p>
+  </div>
+
+  <div class="anvil" id="demo" aria-label="Interactive sync demo">
+    <canvas id="sparks" aria-hidden="true"></canvas>
+    <div class="bar"><span class="dots"><i></i><i></i><i></i></span><b>~/shop-api</b>
+      <span class="forge"><button class="ebtn" type="button" id="edit"><span lang="en">Edit a rule</span><span lang="fa">ویرایش قانون</span></button><button class="fbtn" type="button" id="hammer"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 3l7 4-2 3-7-4z"/><path d="M12.5 7.5L4 20l2 1.5 8.4-12.4z"/></svg><span lang="en">Forge</span><span lang="fa">بساز</span></button></span></div>
+    <div class="abody">
+      <div class="src" id="src"><span class="fn">.agentforge.yaml</span><pre><span class="k">name:</span> <span class="s">shop-api</span>
+<span class="k">stack:</span>
+  <span class="k">languages:</span> [TypeScript]
+  <span class="k">frameworks:</span> [Express]
+  <span class="k">testRunner:</span> <span class="s">npm test</span>
+<span class="k">rules:</span>
+  <span class="k">core:</span>
+    - <span class="s" id="rule">Write minimal, robust code (YAGNI).</span>
+  <span class="k">security:</span>
+    - <span class="s">Never hardcode API keys.</span>
+<span class="k">skills:</span>
+  - <span class="k">name:</span> tdd-architect
+  - <span class="k">name:</span> security-auditor</pre></div>
+      <ul class="tg" id="tg">
+        <li><span class="ic">Cu</span><span class="nm">Cursor</span><span class="fl">.cursorrules · .mdc</span></li>
+        <li><span class="ic">Cl</span><span class="nm">Claude Code</span><span class="fl">CLAUDE.md</span></li>
+        <li><span class="ic">Ws</span><span class="nm">Windsurf</span><span class="fl">.windsurfrules</span></li>
+        <li><span class="ic">Ag</span><span class="nm">Antigravity</span><span class="fl">.agents/AGENTS.md</span></li>
+        <li><span class="ic">Co</span><span class="nm">Copilot</span><span class="fl">copilot-instructions.md</span></li>
+        <li><span class="ic">Ai</span><span class="nm">Aider</span><span class="fl">.aider.conf.yml · .md</span></li>
+        <li><span class="ic">Cn</span><span class="nm">Cline / Roo</span><span class="fl">.clinerules</span></li>
+      </ul>
+    </div>
+    <div class="term" id="term"><p><span class="ps">$ </span><span class="cur"></span></p></div>
+  </div>
+</div></section>
+
+<section class="band"><div class="wrap">
+  <div class="eyebrow rv"><span lang="en">The problem</span><span lang="fa">مسئله</span></div>
+  <h2 class="rv"><span lang="en">Seven agents. Seven rule files.<br>Seven ways to drift.</span><span lang="fa">هفت ایجنت، هفت فایل قانون،<br>هفت راه برای ناهماهنگی.</span></h2>
+  <p class="sub rv"><span lang="en">Every assistant reads its own file. Fix a rule in one and the others quietly keep the old version, while raw source files burn your context window on every prompt.</span><span lang="fa">هر دستیار فایل خودش را می‌خواند. قانونی را در یکی اصلاح کنید و بقیه بی‌صدا نسخهٔ قدیمی را نگه می‌دارند؛ در همین حال فایل‌های خام کد در هر پرامپت پنجرهٔ کانتکست را می‌سوزانند.</span></p>
+  <div class="drift rv">
+    <div class="scatter"><span>.cursorrules</span><span>.cursor/rules/*.mdc</span><span>CLAUDE.md</span><span>.windsurfrules</span><span>.agents/AGENTS.md</span><span>.github/copilot-instructions.md</span><span>.aider.conf.yml</span><span>.clinerules</span></div>
+    <div class="arrow">➜</div>
+    <div class="one"><b>.agentforge.yaml</b><p><span lang="en">One source of truth. <code>agentforge sync</code> regenerates every target; files that didn't change are left alone.</span><span lang="fa">یک منبع حقیقت. <code>agentforge sync</code> همهٔ مقصدها را بازتولید می‌کند و به فایل‌هایی که تغییری نکرده‌اند دست نمی‌زند.</span></p></div>
+  </div>
+</div></section>
+
+<section id="pack"><div class="wrap">
+  <div class="eyebrow rv"><span lang="en">agentforge pack</span><span lang="fa">agentforge pack</span></div>
+  <h2 class="rv"><span lang="en">Hammer code into skeletons.</span><span lang="fa">کد را به اسکلت تبدیل کنید.</span></h2>
+  <p class="sub rv"><span lang="en">The Token-Killer keeps what an agent needs to reason about your code (exports, signatures, types, docstrings) and strips routine bodies. The result is one Markdown context bundle.</span><span lang="fa">«توکن‌کُش» چیزهایی را که ایجنت برای فهم کد لازم دارد (خروجی‌ها، امضاها، تایپ‌ها و توضیحات) نگه می‌دارد و بدنهٔ توابع را حذف می‌کند. خروجی یک بستهٔ کانتکست مارک‌داون است.</span></p>
+  <div class="packg rv">
+    <div class="code"><div class="h"><b>src/cart.ts</b><span><span lang="en">original</span><span lang="fa">اصلی</span> · ~233 tok</span></div>
+<pre><span class="k">export interface</span> <span class="t">Item</span> { id: <span class="t">string</span>; price: <span class="t">number</span>; qty: <span class="t">number</span> }
+<span class="c">/** Sum the cart total in rials */</span>
+<span class="k">export function</span> total(items: <span class="t">Item</span>[]): <span class="t">number</span> {
+  <span class="k">let</span> t = 0;
+  <span class="k">for</span> (<span class="k">const</span> i <span class="k">of</span> items) { t += i.price * i.qty; }
+  <span class="k">return</span> Math.round(t);
+}
+<span class="k">export class</span> <span class="t">Cart</span> {
+  <span class="k">private</span> items: <span class="t">Item</span>[] = [];
+  add(item: <span class="t">Item</span>): <span class="t">void</span> { <span class="k">this</span>.items.push(item); console.log(<span class="c">'added'</span>, item.id); }
+  clear(): <span class="t">void</span> { <span class="k">this</span>.items = []; }
+}</pre></div>
+    <div class="code"><div class="h"><b>PROJECT_CONTEXT.md</b><em><span lang="en">skeleton</span><span lang="fa">اسکلت</span> · ~113 tok</em></div>
+<pre><span class="k">export interface</span> <span class="t">Item</span> { id: <span class="t">string</span>; price: <span class="t">number</span>; qty: <span class="t">number</span> }
+<span class="c">/** Sum the cart total in rials */</span>
+<span class="k">export function</span> total(items: <span class="t">Item</span>[]): <span class="t">number</span> <span class="x">{ /* ... */ }</span>
+<span class="k">export class</span> <span class="t">Cart</span> <span class="x">{ /* ... */ }</span>
+
+
+
+
+
+</pre></div>
+  </div>
+  <div class="meter rv" id="meter">
+    <div class="n" id="tok">233 <small>tok</small></div>
+    <div><div class="track"><b></b><i id="bar"></i></div><div class="lbl"><span lang="en">tokens sent to the model</span><span lang="fa">توکن‌های ارسالی به مدل</span><span id="pct">0%</span></div></div>
+    <button class="fbtn" type="button" id="packbtn"><span lang="en">Run pack</span><span lang="fa">اجرای pack</span></button>
+  </div>
+  <p class="bench rv"><span lang="en">This tiny file has little body to strip, so it saves ~51%. On the larger codebase in the README benchmark: <b>48,200 → 6,150 tokens (87.2% less)</b>. Token counts are a fast local estimate, not a model tokenizer.</span><span lang="fa">این فایل کوچک بدنهٔ زیادی ندارد و حدود ۵۱٪ صرفه‌جویی می‌کند. در بنچمارک README روی یک کدبیس بزرگ‌تر: <b>۴۸٬۲۰۰ ← ۶٬۱۵۰ توکن (۸۷٫۲٪ کمتر)</b>. شمارش توکن یک تخمین سریع محلی است، نه توکنایزر واقعی مدل.</span></p>
+  <div class="langs rv"><span>TypeScript</span><span>JavaScript</span><span>Python</span><span>Go</span><span>Rust</span><span>PHP</span><span>JSON</span></div>
+</div></section>
+
+<section id="lint" class="band"><div class="wrap">
+  <div class="eyebrow rv"><span lang="en">agentforge lint</span><span lang="fa">agentforge lint</span></div>
+  <h2 class="rv"><span lang="en">Temper your rules before agents read them.</span><span lang="fa">قوانین را قبل از خواندن ایجنت آبدیده کنید.</span></h2>
+  <p class="sub rv"><span lang="en">An Agent Health Score from 0 to 100% for security, clarity and token efficiency, with every finding ranked by severity.</span><span lang="fa">«امتیاز سلامت ایجنت» از ۰ تا ۱۰۰٪ برای امنیت، وضوح و بهره‌وری توکن؛ هر یافته بر اساس شدت رتبه‌بندی می‌شود.</span></p>
+  <div class="lintg">
+    <div class="gauge rv">
+      <svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="50" fill="none" stroke="#2c2017" stroke-width="10"/><circle id="arc" cx="60" cy="60" r="50" fill="none" stroke="url(#gg)" stroke-width="10" stroke-linecap="round" stroke-dasharray="314.16" stroke-dashoffset="314.16" transform="rotate(-90 60 60)" style="transition:stroke-dashoffset 1.8s cubic-bezier(.2,.8,.2,1)"/><defs><linearGradient id="gg" x1="0" x2="1"><stop offset="0" stop-color="#ffb020"/><stop offset="1" stop-color="#8be36b"/></linearGradient></defs><text x="60" y="64" text-anchor="middle" class="v" id="gv">0%</text><text x="60" y="82" text-anchor="middle" class="s">HEALTH</text></svg>
+      <div class="sc"><div><span lang="en">Security</span><span lang="fa">امنیت</span><b>100%</b></div><div><span lang="en">Clarity</span><span lang="fa">وضوح</span><b>100%</b></div><div><span lang="en">Token efficiency</span><span lang="fa">بهره‌وری توکن</span><b>100%</b></div></div>
+    </div>
+    <div class="sev">
+      <div class="sv c rv"><h3>CRITICAL</h3><ul>
+        <li><span lang="en">OpenAI, Anthropic and Gemini API keys</span><span lang="fa">کلیدهای API اوپن‌اِی‌آی، آنتروپیک و جمنای</span></li>
+        <li><span lang="en">GitHub tokens, AWS keys, private keys, hard-coded passwords</span><span lang="fa">توکن گیت‌هاب، کلید AWS، کلید خصوصی و رمزهای هاردکد</span></li>
+        <li><span lang="en">Destructive directives: <code>rm -rf /</code>, <code>DROP TABLE</code>, “disable auth / ignore SSL”</span><span lang="fa">دستورهای مخرب: <code>rm -rf /</code>، <code>DROP TABLE</code> و «غیرفعال کردن احراز هویت / نادیده گرفتن SSL»</span></li>
+        <li><span lang="en">Contradicting rules</span><span lang="fa">قوانین متناقض</span></li></ul></div>
+      <div class="sv w rv"><h3>WARNING</h3><ul>
+        <li><span lang="en">Bloated rules (over ~80 tokens each)</span><span lang="fa">قوانین حجیم (بیش از حدود ۸۰ توکن)</span></li>
+        <li><span lang="en">A total rules prompt so large it eats context on every turn</span><span lang="fa">مجموع قوانینی آن‌قدر بزرگ که در هر نوبت کانتکست را می‌خورد</span></li></ul></div>
+      <div class="sv i rv"><h3>INFO</h3><ul>
+        <li><span lang="en">Vague phrasing like “make it clean” or “best practices”, with concrete rewrites suggested</span><span lang="fa">عبارت‌های مبهم مثل «تمیزش کن» یا «بهترین روش‌ها» همراه با پیشنهاد جایگزین مشخص</span></li></ul></div>
+    </div>
+  </div>
+</div></section>
+
+<section id="skills"><div class="wrap">
+  <div class="eyebrow rv"><span lang="en">agentforge skills</span><span lang="fa">agentforge skills</span></div>
+  <h2 class="rv"><span lang="en">7 skills, ready to temper in.</span><span lang="fa">۷ مهارت آماده برای افزودن.</span></h2>
+  <p class="sub rv"><span lang="en">Battle-tested personas that drop straight into every agent's instructions. Click a card to copy its install command.</span><span lang="fa">پرسوناهای آزموده که مستقیم به دستورالعمل همهٔ ایجنت‌ها اضافه می‌شوند. روی هر کارت بزنید تا فرمان نصبش کپی شود.</span></p>
+  <div class="skills">
+    <button class="sk rv" type="button" data-sk="minimalist-architect"><span class="cat">architecture</span><h3>minimalist-architect</h3><p><span lang="en">YAGNI, standard library first, zero boilerplate.</span><span lang="fa">YAGNI، اول کتابخانهٔ استاندارد، بدون کد اضافی.</span></p><span class="ad"></span></button>
+    <button class="sk rv" type="button" data-sk="tdd-architect"><span class="cat">testing</span><h3>tdd-architect</h3><p><span lang="en">Strict Red-Green-Refactor with isolated, high-coverage tests.</span><span lang="fa">چرخهٔ سخت‌گیرانهٔ قرمز-سبز-بازآرایی با تست‌های ایزوله و پوشش بالا.</span></p><span class="ad"></span></button>
+    <button class="sk rv" type="button" data-sk="security-auditor"><span class="cat">security</span><h3>security-auditor</h3><p><span lang="en">OWASP Top 10 hardening, input sanitisation, injection prevention.</span><span lang="fa">مقاوم‌سازی OWASP Top 10، پاک‌سازی ورودی و جلوگیری از تزریق.</span></p><span class="ad"></span></button>
+    <button class="sk rv" type="button" data-sk="token-optimizer"><span class="cat">optimization</span><h3>token-optimizer</h3><p><span lang="en">Keeps prompts small and the context window from running dry.</span><span lang="fa">پرامپت‌ها را کوچک و پنجرهٔ کانتکست را خالی از فشار نگه می‌دارد.</span></p><span class="ad"></span></button>
+    <button class="sk rv" type="button" data-sk="fastapi-master"><span class="cat">fullstack</span><h3>fastapi-master</h3><p><span lang="en">Pydantic v2 schemas, async handlers, dependency injection.</span><span lang="fa">اسکیماهای Pydantic v2، هندلرهای async و تزریق وابستگی.</span></p><span class="ad"></span></button>
+    <button class="sk rv" type="button" data-sk="react-nextjs-pro"><span class="cat">fullstack</span><h3>react-nextjs-pro</h3><p><span lang="en">Server Components, App Router, Server Actions, smooth UX.</span><span lang="fa">Server Components، App Router، Server Actions و تجربهٔ روان.</span></p><span class="ad"></span></button>
+    <button class="sk rv" type="button" data-sk="docker-devops"><span class="cat">devops</span><h3>docker-devops</h3><p><span lang="en">Multi-stage, distroless, non-root hardened images.</span><span lang="fa">ایمیج‌های چندمرحله‌ای، distroless و بدون root.</span></p><span class="ad"></span></button>
+    <div class="sk more rv"><span class="cat">+ your own</span><p><span lang="en">Skills live in a small registry in the source. Add one and open a PR.</span><span lang="fa">مهارت‌ها در یک رجیستری کوچک در سورس هستند. مهارت خودتان را اضافه کنید و PR بفرستید.</span></p></div>
+  </div>
+</div></section>
+
+<section class="band" id="targets"><div class="wrap">
+  <div class="eyebrow rv"><span lang="en">agentforge sync</span><span lang="fa">agentforge sync</span></div>
+  <h2 class="rv"><span lang="en">Where the sparks land.</span><span lang="fa">جرقه‌ها کجا فرود می‌آیند.</span></h2>
+  <p class="sub rv"><span lang="en">Pick targets in the YAML or per run with <code>--targets</code>. <code>--dry-run</code> shows what would change without writing.</span><span lang="fa">مقصدها را در YAML یا در هر اجرا با <code>--targets</code> انتخاب کنید. <code>--dry-run</code> بدون نوشتن نشان می‌دهد چه چیزی تغییر می‌کند.</span></p>
+  <div class="tblw rv"><table class="tbl"><thead><tr><th><span lang="en">Agent</span><span lang="fa">ایجنت</span></th><th><span lang="en">Files written</span><span lang="fa">فایل‌های تولیدی</span></th><th>--targets</th></tr></thead><tbody>
+    <tr><td>Cursor</td><td><code>.cursorrules</code> · <code>.cursor/rules/project-rules.mdc</code></td><td><code>cursor</code></td></tr>
+    <tr><td>Claude Code</td><td><code>CLAUDE.md</code></td><td><code>claude</code></td></tr>
+    <tr><td>Windsurf</td><td><code>.windsurfrules</code></td><td><code>windsurf</code></td></tr>
+    <tr><td>Google Antigravity</td><td><code>.agents/AGENTS.md</code></td><td><code>antigravity</code></td></tr>
+    <tr><td>GitHub Copilot</td><td><code>.github/copilot-instructions.md</code></td><td><code>copilot</code></td></tr>
+    <tr><td>Aider</td><td><code>.aider.conf.yml</code> · <code>.aider.prompt.md</code></td><td><code>aider</code></td></tr>
+    <tr><td>Cline / Roo Code</td><td><code>.clinerules</code></td><td><code>cline</code></td></tr>
+  </tbody></table></div>
+</div></section>
+
+<section><div class="wrap studio">
+  <div class="rv">
+    <div class="eyebrow"><span lang="en">agentforge ui</span><span lang="fa">agentforge ui</span></div>
+    <h2><span lang="en">A local Web Studio.</span><span lang="fa">یک استودیوی وب محلی.</span></h2>
+    <p class="sub" style="margin-bottom:0"><span lang="en">Prefer clicking? <code>agentforge ui</code> opens a dashboard on <code>localhost:3737</code>.</span><span lang="fa">کلیک را ترجیح می‌دهید؟ <code>agentforge ui</code> داشبوردی روی <code>localhost:3737</code> باز می‌کند.</span></p>
+    <ul class="list">
+      <li><span lang="en">Rule editor with one-click target toggles and sync</span><span lang="fa">ویرایشگر قوانین با انتخاب مقصد و همگام‌سازی با یک کلیک</span></li>
+      <li><span lang="en">Live compression playground with token counts</span><span lang="fa">زمین بازی فشرده‌سازی زنده با شمارش توکن</span></li>
+      <li><span lang="en">Health score widget with fix suggestions</span><span lang="fa">ویجت امتیاز سلامت با پیشنهاد اصلاح</span></li>
+      <li><span lang="en">Visual skills browser</span><span lang="fa">مرورگر تصویری مهارت‌ها</span></li>
+    </ul>
+  </div>
+  <div class="win rv"><div class="bar"><span class="dots"><i></i><i></i><i></i></span><span>localhost:3737</span></div><img src="studio.png" width="1360" height="500" alt="AgentForge Web Studio: target agents and core project rules" loading="lazy"></div>
+</div></section>
+
+<section id="start" class="band"><div class="wrap">
+  <div class="eyebrow rv"><span lang="en">Quick start</span><span lang="fa">شروع سریع</span></div>
+  <h2 class="rv"><span lang="en">Light the forge in 30 seconds.</span><span lang="fa">در ۳۰ ثانیه کوره را روشن کنید.</span></h2>
+  <div class="startg">
+    <div class="rv">
+      <div class="tabs" role="tablist"><button type="button" role="tab" aria-selected="true" data-tab="t-npx">npx (GitHub)</button><button type="button" role="tab" aria-selected="false" data-tab="t-src"><span lang="en">From source</span><span lang="fa">از سورس</span></button></div>
+      <div class="pane" id="t-npx"><button class="copy" type="button" data-copy="p-npx"><span lang="en">Copy</span><span lang="fa">کپی</span></button><pre id="p-npx"><span class="c"># in your project (Node 18+, npm 10+ recommended)</span>
+npx github:mrzroot/agentforge init       <span class="c"># detects your stack</span>
+npx github:mrzroot/agentforge sync       <span class="c"># write every agent's rules</span>
+npx github:mrzroot/agentforge pack --out CONTEXT.md
+npx github:mrzroot/agentforge lint
+npx github:mrzroot/agentforge ui         <span class="c"># http://localhost:3737</span></pre></div>
+      <div class="pane" id="t-src" hidden><button class="copy" type="button" data-copy="p-src"><span lang="en">Copy</span><span lang="fa">کپی</span></button><pre id="p-src">git clone https://github.com/mrzroot/agentforge.git
+cd agentforge
+npm install      <span class="c"># builds via the prepare script</span>
+npm link         <span class="c"># puts `agentforge` and `af` on your PATH</span>
+
+cd ~/your-project
+agentforge init -y
+agentforge sync --targets cursor claude aider</pre></div>
+      <div class="warn"><span lang="en"><b>Heads-up:</b> AgentForge isn't published on npm yet, so <code>npx agentforge</code> won't work. Use the <code>github:</code> form or a source checkout.</span><span lang="fa"><b>توجه:</b> ایجنت‌فورج هنوز در npm منتشر نشده، پس <code>npx agentforge</code> کار نمی‌کند. از شکل <code>github:</code> یا نسخهٔ سورس استفاده کنید.</span></div>
+    </div>
+    <div class="ref rv">
+      <div><code>init [-y]</code><span lang="en">Create .agentforge.yaml from your detected stack</span><span lang="fa">ساخت ‎.agentforge.yaml بر اساس پشتهٔ شناسایی‌شده</span></div>
+      <div><code>sync [-t …] [--dry-run]</code><span lang="en">Compile rules for every target agent</span><span lang="fa">کامپایل قوانین برای همهٔ ایجنت‌های مقصد</span></div>
+      <div><code>pack [-o PROJECT_CONTEXT.md]</code><span lang="en">Write a token-light AST context bundle</span><span lang="fa">نوشتن بستهٔ کانتکست AST کم‌توکن</span></div>
+      <div><code>lint</code><span lang="en">Score rules for security, clarity and bloat</span><span lang="fa">امتیازدهی قوانین از نظر امنیت، وضوح و حجم</span></div>
+      <div><code>skills list · skills add &lt;id&gt;</code><span lang="en">Browse and install built-in skills</span><span lang="fa">مرور و نصب مهارت‌های آماده</span></div>
+      <div><code>ui [-p 3737]</code><span lang="en">Launch the local Web Studio</span><span lang="fa">اجرای استودیوی وب محلی</span></div>
+    </div>
+  </div>
+</div></section>
+
+<section id="faq"><div class="wrap faq">
+  <div class="eyebrow rv"><span lang="en">FAQ</span><span lang="fa">پرسش‌های رایج</span></div>
+  <h2 class="rv"><span lang="en">Questions from the anvil.</span><span lang="fa">پرسش‌ها از کنار سندان.</span></h2>
+  <details><summary><span lang="en">Is it on npm?</span><span lang="fa">در npm هست؟</span></summary><p><span lang="en">Not yet. Run it with <code>npx github:mrzroot/agentforge &lt;command&gt;</code>, which installs from the repo and builds automatically, or clone it and <code>npm link</code>.</span><span lang="fa">هنوز نه. با <code>npx github:mrzroot/agentforge &lt;command&gt;</code> اجرایش کنید که از مخزن نصب و خودکار ساخته می‌شود، یا مخزن را کلون و <code>npm link</code> کنید.</span></p></details>
+  <details><summary><span lang="en">Does my code leave my machine?</span><span lang="fa">کد من از سیستمم خارج می‌شود؟</span></summary><p><span lang="en">No. Sync, pack and lint are plain local file operations, and the Web Studio is served from your own machine. AgentForge has no telemetry and makes no API calls.</span><span lang="fa">نه. sync، pack و lint عملیات ساده روی فایل‌های محلی‌اند و استودیوی وب هم از خود سیستم شما سرو می‌شود. ایجنت‌فورج تله‌متری ندارد و هیچ API ای را صدا نمی‌زند.</span></p></details>
+  <details><summary><span lang="en">Will sync overwrite my hand-written CLAUDE.md?</span><span lang="fa">sync فایل CLAUDE.mdِ دست‌نویس من را بازنویسی می‌کند؟</span></summary><p><span lang="en">Yes, generated files are owned by AgentForge: changed ones are reported as <i>updated</i>, identical ones as <i>unchanged</i>. Move your existing guidance into <code>.agentforge.yaml</code> first, commit, and use <code>--dry-run</code> to preview.</span><span lang="fa">بله، فایل‌های تولیدی متعلق به ایجنت‌فورج‌اند: فایل‌های تغییرکرده <i>updated</i> و فایل‌های یکسان <i>unchanged</i> گزارش می‌شوند. اول راهنمایی‌های فعلی را به ‎<code>.agentforge.yaml</code> منتقل و کامیت کنید و با <code>--dry-run</code> پیش‌نمایش بگیرید.</span></p></details>
+  <details><summary><span lang="en">How accurate are the token numbers?</span><span lang="fa">اعداد توکن چقدر دقیق‌اند؟</span></summary><p><span lang="en">They come from a fast BPE-style heuristic, close enough to compare before and after, but not your model's exact tokenizer. Savings depend on how much of your code is function bodies.</span><span lang="fa">از یک تخمین سریع شبیه BPE می‌آیند؛ برای مقایسهٔ قبل و بعد کافی‌اند، اما توکنایزر دقیق مدل شما نیستند. میزان صرفه‌جویی به سهم بدنهٔ توابع در کدتان بستگی دارد.</span></p></details>
+  <details><summary><span lang="en">Which languages can pack skeletonize?</span><span lang="fa">pack کدام زبان‌ها را اسکلت می‌کند؟</span></summary><p><span lang="en">TypeScript and JavaScript (including JSX/TSX), Python, Go, Rust and PHP. JSON is condensed; other files are included as text. Include and exclude globs and a per-file token cap live under <code>compression:</code> in the YAML.</span><span lang="fa">TypeScript و JavaScript (با JSX/TSX)، Python، Go، Rust و PHP. JSON فشرده می‌شود و بقیهٔ فایل‌ها متنی می‌آیند. الگوهای include/exclude و سقف توکن هر فایل زیر <code>compression:</code> در YAML تنظیم می‌شوند.</span></p></details>
+  <details><summary><span lang="en">Can I add my own agent target or skill?</span><span lang="fa">می‌توانم ایجنت یا مهارت خودم را اضافه کنم؟</span></summary><p><span lang="en">Yes. Targets are small generators in <code>src/core/sync</code> and skills sit in <code>src/core/skills/registry.ts</code>. PRs are welcome.</span><span lang="fa">بله. مقصدها مولدهای کوچکی در <code>src/core/sync</code> هستند و مهارت‌ها در <code>src/core/skills/registry.ts</code>. PR شما خوش‌آمد است.</span></p></details>
+</div></section>
+
+<section class="close band"><div class="wrap">
+  <h2 class="rv"><span lang="en">One file in.<br><span class="hot">Every agent aligned.</span></span><span lang="fa">یک فایل ورودی.<br><span class="hot">همهٔ ایجنت‌ها هماهنگ.</span></span></h2>
+  <div class="cta rv"><a class="btn p" href="#start"><span lang="en">Get started</span><span lang="fa">شروع کنید</span></a><a class="btn" href="https://github.com/mrzroot/agentforge">★ GitHub</a></div>
+</div></section>
+</main>
+
+<footer><div class="wrap">
+  <span><span lang="en">AgentForge · MIT · by</span><span lang="fa">ایجنت‌فورج · MIT · ساختهٔ</span> <a href="https://mrzroot.github.io/">mrzroot</a></span>
+  <span><a href="https://mrzroot.github.io/projects/"><span lang="en">More projects</span><span lang="fa">پروژه‌های دیگر</span></a> · <a href="https://github.com/mrzroot/agentforge/issues"><span lang="en">Issues</span><span lang="fa">گزارش مشکل</span></a></span>
+</div></footer>
+
+<script>
+(function(){
+  var R=document.documentElement,$=function(s){return document.querySelector(s)},$$=function(s){return Array.prototype.slice.call(document.querySelectorAll(s))};
+  var RM=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var TITLES={en:'AgentForge · Forge your AI agent rules once, for every agent',fa:'ایجنت‌فورج · قوانین ایجنت‌های هوش مصنوعی را یک بار بنویسید'};
+  function setLang(l,save){R.setAttribute('data-lang',l);R.lang=l;R.dir=l==='fa'?'rtl':'ltr';document.title=TITLES[l];
+    $$('[data-set-lang]').forEach(function(b){b.setAttribute('aria-pressed',String(b.getAttribute('data-set-lang')===l))});
+    if(save)try{localStorage.setItem('mrz-lang',l)}catch(e){}}
+  setLang(R.getAttribute('data-lang')||'en');
+  $$('[data-set-lang]').forEach(function(b){b.addEventListener('click',function(){setLang(b.getAttribute('data-set-lang'),true)})});
+  function copy(t,b){if(navigator.clipboard)navigator.clipboard.writeText(t).then(function(){b.classList.add('ok');setTimeout(function(){b.classList.remove('ok')},1300)})}
+  $$('[data-copy]').forEach(function(b){b.addEventListener('click',function(){var t=document.getElementById(b.getAttribute('data-copy')).textContent.replace(/^\$ /,'');
+    if(b.getAttribute('data-copy')!=='c-hero')t=t.split('\n').map(function(x){return x.replace(/\s+#.*$/,'')}).filter(function(x){return x.trim()&&x.trim()[0]!=='#'}).join('\n');copy(t,b)})});
+  $$('[data-tab]').forEach(function(b){b.addEventListener('click',function(){$$('[data-tab]').forEach(function(x){x.setAttribute('aria-selected',String(x===b));document.getElementById(x.getAttribute('data-tab')).hidden=x!==b})})});
+  $$('[data-sk]').forEach(function(b){var ad=b.querySelector('.ad');ad.textContent='$ agentforge skills add '+b.getAttribute('data-sk');
+    b.addEventListener('click',function(){copy('agentforge skills add '+b.getAttribute('data-sk'),b);ad.textContent='✓ copied';setTimeout(function(){ad.textContent='$ agentforge skills add '+b.getAttribute('data-sk')},1400)})});
+
+  /* reveal */
+  var io='IntersectionObserver' in window?new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12}):null;
+  $$('.rv').forEach(function(el){io?io.observe(el):el.classList.add('in')});
+
+  /* embers background */
+  var ec=$('#embers'),ex=ec.getContext('2d'),P=[],W,H,dpr=Math.min(window.devicePixelRatio||1,2);
+  function rs(){W=innerWidth;H=innerHeight;ec.width=W*dpr;ec.height=H*dpr;ex.setTransform(dpr,0,0,dpr,0,0)}rs();addEventListener('resize',rs);
+  var N=innerWidth<640?26:60;for(var i=0;i<N;i++)P.push({x:Math.random()*innerWidth,y:Math.random()*innerHeight,r:Math.random()*1.8+.4,v:Math.random()*.5+.15,w:Math.random()*6.28,a:Math.random()*.6+.2});
+  function emb(){ex.clearRect(0,0,W,H);P.forEach(function(p){p.y-=p.v;p.w+=.02;p.x+=Math.sin(p.w)*.3;if(p.y<-10){p.y=H+10;p.x=Math.random()*W}
+    ex.beginPath();ex.fillStyle='rgba(255,'+(90+Math.round(p.a*100))+',30,'+p.a+')';ex.shadowColor='#ff6a1a';ex.shadowBlur=8;ex.arc(p.x,p.y,p.r,0,6.28);ex.fill()});
+    if(!document.hidden)requestAnimationFrame(emb);else setTimeout(emb,500)}
+  if(!RM)emb();
+
+  /* sparks on strike */
+  var sc=$('#sparks'),sx=sc.getContext('2d'),S=[],sOn=false;
+  function srs(){var r=sc.getBoundingClientRect();sc.width=r.width*dpr;sc.height=r.height*dpr;sx.setTransform(dpr,0,0,dpr,0,0)}srs();addEventListener('resize',srs);
+  function burst(x,y,n){for(var i=0;i<n;i++){var a=Math.random()*Math.PI*2,s=Math.random()*5+2;S.push({x:x,y:y,vx:Math.cos(a)*s,vy:Math.sin(a)*s-2,l:1})}if(!sOn){sOn=true;sp()}}
+  function sp(){var r=sc.getBoundingClientRect();sx.clearRect(0,0,r.width,r.height);S=S.filter(function(p){return p.l>0});
+    S.forEach(function(p){p.x+=p.vx;p.y+=p.vy;p.vy+=.18;p.l-=.022;sx.strokeStyle='rgba(255,'+Math.round(140+p.l*90)+',40,'+p.l+')';sx.lineWidth=2;sx.beginPath();sx.moveTo(p.x,p.y);sx.lineTo(p.x-p.vx*2,p.y-p.vy*2);sx.stroke()});
+    if(S.length)requestAnimationFrame(sp);else{sOn=false;sx.clearRect(0,0,r.width,r.height)}}
+
+  /* sync demo: replays real `agentforge sync` output */
+  var T=[['CURSOR',['.cursorrules','.cursor/rules/project-rules.mdc']],['CLAUDE',['CLAUDE.md']],['WINDSURF',['.windsurfrules']],['ANTIGRAVITY',['.agents/AGENTS.md']],
+         ['COPILOT',['.github/copilot-instructions.md']],['AIDER',['.aider.conf.yml','.aider.prompt.md']],['CLINE',['.clinerules']]];
+  var term=$('#term'),rows=$$('#tg li'),hb=$('#hammer'),eb=$('#edit'),runs=0,edited=false,busy=false;
+  function line(h){var p=document.createElement('p');p.innerHTML=h;term.appendChild(p);while(term.children.length>11)term.removeChild(term.firstChild);return p}
+  function wait(ms){return new Promise(function(r){setTimeout(r,RM?0:ms)})}
+  function strike(){var r=sc.getBoundingClientRect(),s=$('#src').getBoundingClientRect();burst(s.right-r.left-(R.dir==='rtl'?s.width:0),s.top-r.top+s.height/2,46);
+    $('#src').classList.remove('hit');void $('#src').offsetWidth;$('#src').classList.add('hit')}
+  async function forge(){if(busy)return;busy=true;hb.disabled=true;hb.classList.add('strike');
+    term.innerHTML='';rows.forEach(function(r){r.classList.remove('lit')});
+    var cmd=line('<span class="ps">$ </span>'),txt='agentforge sync -t cursor claude windsurf antigravity copilot aider cline';
+    for(var i=0;i<=txt.length;i+=3){cmd.innerHTML='<span class="ps">$ </span>'+txt.slice(0,i)+'<span class="cur"></span>';await wait(18)}
+    cmd.innerHTML='<span class="ps">$ </span>'+txt;
+    strike();await wait(300);strike();
+    line('<span class="u">ℹ</span> Synchronizing agent directives for: shop-api...');await wait(260);
+    var n=0,mode=runs===0?'created':(edited?'updated':'unchanged');
+    for(var k=0;k<T.length;k++){line('<span class="d">['+(k+1)+'/7]</span> Platform: '+T[k][0]);rows[k].classList.add('lit');
+      var r1=sc.getBoundingClientRect(),q=rows[k].getBoundingClientRect();burst(q.left-r1.left+(R.dir==='rtl'?q.width-20:20),q.top-r1.top+q.height/2,10);
+      await wait(200);
+      T[k][1].forEach(function(f){n++;line(mode==='unchanged'?'   <span class="d">– unchanged '+f+'</span>':'   <span class="g">✔</span> '+mode+' '+f)});await wait(170)}
+    line('');line('<span class="g">✔ Synchronized '+n+' files across 7 agent platforms!</span>');
+    line('<span class="ps">$ </span><span class="cur"></span>');
+    runs++;edited=false;$('#rule').textContent=$('#rule').textContent;busy=false;hb.disabled=false;hb.classList.remove('strike')}
+  hb.addEventListener('click',forge);
+  eb.addEventListener('click',function(){if(busy)return;edited=true;var r=$('#rule');r.textContent=r.textContent.indexOf('tests')<0?'Write minimal code; every change ships with tests.':'Write minimal, robust code (YAGNI).';
+    r.style.background='rgba(255,176,32,.25)';setTimeout(function(){r.style.background=''},900);line('<span class="d"># edited .agentforge.yaml: next forge reports “updated”</span>')});
+  var dio='IntersectionObserver' in window?new IntersectionObserver(function(es){if(es[0].isIntersecting){dio.disconnect();setTimeout(forge,500)}},{threshold:.4}):null;
+  dio?dio.observe($('#demo')):forge();
+
+  /* pack meter */
+  var packed=false;function pack(){if(packed)return;packed=true;var bar=$('#bar'),tok=$('#tok'),pct=$('#pct');bar.style.width=(114/233*100)+'%';
+    var t0=performance.now();(function f(t){var k=Math.min(1,(t-t0)/1600),e=1-Math.pow(1-k,3),v=Math.round(233-(233-114)*e);tok.innerHTML=v+' <small>tok</small>';pct.textContent='−'+(Math.round((233-v)/233*1000)/10)+'%';if(k<1)requestAnimationFrame(f)})(t0)}
+  $('#packbtn').addEventListener('click',function(){if(packed){packed=false;$('#bar').style.width='100%';$('#tok').innerHTML='233 <small>tok</small>';$('#pct').textContent='0%';setTimeout(pack,700)}else pack()});
+  var pio='IntersectionObserver' in window?new IntersectionObserver(function(es){if(es[0].isIntersecting){pio.disconnect();setTimeout(pack,400)}},{threshold:.6}):null;
+  pio?pio.observe($('#meter')):pack();
+  /* gauge */
+  var gio='IntersectionObserver' in window?new IntersectionObserver(function(es){if(es[0].isIntersecting){gio.disconnect();$('#arc').style.strokeDashoffset='0';
+    var t0=performance.now();(function f(t){var k=Math.min(1,(t-t0)/1800);$('#gv').textContent=Math.round(100*(1-Math.pow(1-k,3)))+'%';if(k<1)requestAnimationFrame(f)})(t0)}},{threshold:.5}):null;
+  if(gio)gio.observe($('.gauge'));else{$('#arc').style.strokeDashoffset='0';$('#gv').textContent='100%'}
+})();
+</script>
+</body>
+</html>
