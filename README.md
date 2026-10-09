@@ -14,11 +14,11 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Node.js](https://img.shields.io/badge/Node.js-%3E%3D18.0.0-brightgreen.svg)](https://nodejs.org)
-[![NPM Version](https://img.shields.io/badge/npm-v1.0.0-blue.svg)](https://npmjs.com/package/agentforge)
+[![Version](https://img.shields.io/badge/version-v1.0.0-blue.svg)](https://github.com/mrzroot/agentforge)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
 [![GitHub Stars](https://img.shields.io/github/stars/mrzroot/agentforge?style=social)](https://github.com/mrzroot/agentforge)
 
-**Single Source of Truth for all your AI Coding Agents + 85% Token AST Compressor + Rule Linter + 50+ Agent Skills.**
+**Single Source of Truth for all your AI Coding Agents + 85% Token AST Compressor + Rule Linter + 7 Built-in Agent Skills.**
 
 [Quickstart](#-quickstart-in-30-seconds) • [Features](#-core-features) • [Comparison](#-comparison-matrix) • [Web Studio](#-interactive-web-studio) • [Skills Library](#-curated-skills-library)
 
@@ -46,29 +46,34 @@ AgentForge acts as the **Universal Operating System** for your AI workflow:
 
 ## ⚡ Quickstart in 30 Seconds
 
-No installation required. Run directly with `npx`:
+> **Note:** AgentForge is **not published on npm yet**, so `npx agentforge` / `npm install -g agentforge` will not work. Run it from GitHub instead (Node.js 18+, npm 10+ recommended).
+
+Run directly from GitHub with `npx` (it builds on install):
 
 ```bash
 # 1. Initialize AgentForge in any project (auto-detects language & framework)
-npx agentforge init
+npx github:mrzroot/agentforge init
 
 # 2. Compile & Synchronize rules across all AI agents
-npx agentforge sync
+npx github:mrzroot/agentforge sync
 
-# 3. Compress codebase into token-optimized context bundle (saves 85% tokens!)
-npx agentforge pack --out CONTEXT.md
+# 3. Compress codebase into a token-optimized context bundle
+npx github:mrzroot/agentforge pack --out CONTEXT.md
 
 # 4. Audit rules & prompt health
-npx agentforge lint
+npx github:mrzroot/agentforge lint
 
 # 5. Launch interactive Web Dashboard
-npx agentforge ui
+npx github:mrzroot/agentforge ui
 ```
 
-Or install globally:
+Or install from source and link the `agentforge` command globally:
 
 ```bash
-npm install -g agentforge
+git clone https://github.com/mrzroot/agentforge.git
+cd agentforge
+npm install          # also builds via the prepare script
+npm link             # `agentforge` (and `af`) are now on your PATH
 ```
 
 ---
@@ -81,7 +86,7 @@ npm install -g agentforge
 | **AST Token Compression** (80-90% token reduction) | ❌ | ❌ | ❌ | **✅ Built-in** |
 | **Secret & API Key Scanner in Rules** | ❌ | ❌ | ❌ | **✅ Built-in** |
 | **Prompt Conflict & Bloat Linter** | ❌ | ❌ | ❌ | **✅ Built-in** |
-| **Curated Skills Library** | ❌ | ❌ | ❌ | **✅ 50+ Skills** |
+| **Curated Skills Library** | ❌ | ❌ | ❌ | **✅ 7 Built-in Skills** |
 | **Local Visual Web Studio UI** | ❌ | ❌ | ❌ | **✅ Zero-Config** |
 
 ---
