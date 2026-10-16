@@ -2,11 +2,13 @@
 <html lang="en" data-lang="en" dir="ltr">
 <head>
 <meta charset="utf-8">
+<script>/*mrz-theme*/(function(){var d=document.documentElement,m='system';try{m=localStorage.getItem('mrz-theme')||'system'}catch(e){}var q=window.matchMedia?matchMedia('(prefers-color-scheme: dark)'):null;var t=m==='light'||m==='dark'?m:(q&&q.matches?'dark':'light');d.setAttribute('data-theme',t);d.style.colorScheme=t})()</script>
+<meta name="theme-color" content="#f7f5ef">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>AgentForge · Forge your AI agent rules once, for every agent</title>
 <meta name="description" content="AgentForge compiles one .agentforge.yaml into rules for Cursor, Claude Code, Windsurf, Antigravity, Copilot, Aider and Cline, packs your code into token-light AST skeletons, lints rules for leaked secrets and ships 7 built-in skills. MIT, runs locally.">
-<meta name="theme-color" content="#0b0806">
-<meta name="color-scheme" content="dark">
+
+<meta name="color-scheme" content="light dark">
 <meta property="og:title" content="AgentForge · ایجنت‌فورج">
 <meta property="og:description" content="One rules file. Seven AI coding agents. Token-light context packs, a rule linter and 7 built-in skills.">
 <meta property="og:type" content="website">
@@ -226,6 +228,43 @@ footer a{color:var(--mut)}
 @media (max-width:640px){.top nav a.h,.gh,.brand small{display:none}.hero{padding:44px 0 64px}section{padding:70px 0}.packg,.skills{grid-template-columns:minmax(0,1fr)}.abody{grid-template-columns:minmax(0,1fr)}.src{border-inline-end:0;border-bottom:1px solid var(--line);max-height:170px}.meter{grid-template-columns:minmax(0,1fr)}.meter .n{font-size:32px}.tbl th,.tbl td{padding:10px 12px;font-size:13px}.tbl th:nth-child(3),.tbl td:nth-child(3){display:none}.anvil .bar b{display:none}.term{font-size:10.5px;overflow-x:auto}}
 @media (prefers-reduced-motion:reduce){#embers{display:none}.rv{opacity:1;transform:none}*{animation:none!important;transition:none!important}}
 </style>
+<style id="mrz-theme-css">
+/* mrz theme toggle */
+.mrz-tt{all:unset;box-sizing:border-box;cursor:pointer;display:inline-grid;place-items:center;flex:none;width:34px;height:34px;border-radius:999px;color:inherit;border:1.5px solid currentColor;transition:transform .2s,background-color .2s}
+.mrz-tt:hover{transform:rotate(-12deg)}.mrz-tt:focus-visible{outline:2px solid #1fb5ad;outline-offset:3px}
+.mrz-tt svg{width:17px;height:17px;display:block}
+html[data-theme=dark] .mrz-tt .i-moon,html:not([data-theme=dark]) .mrz-tt .i-sun{display:none}
+/* AgentForge · molten-amber forge retuned to the turquoise + gold palette */
+html[data-theme=dark]{--bg:#070b1a;--bg2:#0b1124;--panel:#0e1428;--panel2:#121a33;--line:#1c2645;--line2:#2a3560;--fg:#eceff7;--mut:#a9b1cc;--dim:#8089a8;
+--molt:#f0a04b;--amb:#e8b04b;--hot:#e8763a;--steel:#a9b1cc;--ok:#5fd6a0;--bad:#ff7a70;--info:#3fd0c9;--slab:#060a17}
+html[data-theme=light]{--bg:#f7f5ef;--bg2:#efeadc;--panel:#fffdf8;--panel2:#f4f0e5;--line:#e3ddcc;--line2:#d3cab3;--fg:#0b1230;--mut:#3a4363;--dim:#5b6383;
+--molt:#a4470c;--amb:#8a5c0c;--hot:#b23a0c;--steel:#4a5370;--ok:#0b7a4f;--bad:#b42318;--info:#0a7671;--slab:#fffdf8;color-scheme:light}
+html[data-theme] .lang button[aria-pressed=true]{background:#f0a04b;color:#1a0b02}
+html[data-theme] .tag i,html[data-theme] .eyebrow:before{background:#f0a04b}
+html[data-theme] .btn.p,html[data-theme] .fbtn{background:linear-gradient(180deg,#f0be5e,#f0a04b);color:#1a0b02}
+html[data-theme] .tg li.lit .ic{background:#f0a04b;color:#1a0b02}
+html[data-theme] .track i{background:linear-gradient(90deg,#e8763a,#f0a04b,#e8b04b)}
+html[data-theme] .inst,html[data-theme] .term,html[data-theme] .code,html[data-theme] .pane,html[data-theme] .tabs button[aria-selected=true]{background:var(--slab)}
+html[data-theme=dark] .top{background:rgba(7,11,26,.8)}
+html[data-theme=dark] .hero:before{background:radial-gradient(60% 60% at 70% 80%,rgba(240,160,75,.16),transparent 70%),radial-gradient(40% 40% at 20% 10%,rgba(63,208,201,.1),transparent 70%)}
+html[data-theme=dark] .anvil{background:linear-gradient(180deg,#121a33,#0a1024)}
+html[data-theme=dark] .dots i{background:#2a3560}html[data-theme=dark] .tg li .ic{background:#1a2240}html[data-theme=dark] .track{background:#1c2645}
+html[data-theme=dark] .src .s{color:#c9d0e6}html[data-theme=dark] .term{color:#d6dcef}html[data-theme=dark] .code pre{color:#d6dcef}html[data-theme=dark] .code .c{color:#8a94b6}html[data-theme=dark] .pane pre{color:#dfe4f3}
+html[data-theme=dark] .code .t{color:#3fd0c9}
+html[data-theme=light] .top{background:rgba(247,245,239,.86)}
+html[data-theme=light] .hero:before{background:radial-gradient(60% 60% at 70% 80%,rgba(240,160,75,.18),transparent 70%),radial-gradient(40% 40% at 20% 10%,rgba(31,181,173,.12),transparent 70%)}
+html[data-theme=light] .hot{background:linear-gradient(180deg,#b7801f 0%,#a4470c 60%,#8a2c06 100%);-webkit-background-clip:text;background-clip:text;filter:none}
+html[data-theme=light] .btn.p{box-shadow:0 8px 26px -10px rgba(240,160,75,.6)}
+html[data-theme=light] .anvil{background:linear-gradient(180deg,#fffdf8,#f4f0e5);box-shadow:0 40px 90px -40px rgba(11,18,48,.3),0 0 0 1px rgba(11,18,48,.06) inset}
+html[data-theme=light] .dots i{background:#d3cab3}html[data-theme=light] .tg li .ic{background:#efeadc}html[data-theme=light] .track{background:#e3ddcc}
+html[data-theme=light] .src .k{color:#8a4a0c}html[data-theme=light] .src .s{color:#3a4363}
+html[data-theme=light] .tg li.lit .ic{box-shadow:0 0 14px rgba(240,160,75,.55)}
+html[data-theme=light] .term{color:#0b1230}html[data-theme=light] .code pre,html[data-theme=light] .pane pre{color:#0b1230}
+html[data-theme=light] .code .k{color:#8a4a0c}html[data-theme=light] .code .t{color:#0a7671}html[data-theme=light] .code .c{color:#5b6383}
+html[data-theme=light] .win{box-shadow:0 40px 80px -36px rgba(11,18,48,.3),0 0 60px -24px rgba(240,160,75,.3)}
+html[data-theme=light] .arrow{text-shadow:none}
+html[data-theme=light] .warn{background:rgba(232,176,75,.1)}
+</style>
 </head>
 <body>
 <canvas id="embers" aria-hidden="true"></canvas>
@@ -238,7 +277,7 @@ footer a{color:var(--mut)}
     <a href="#start"><span lang="en">Quick start</span><span lang="fa">شروع سریع</span></a>
     <a class="h" href="#faq"><span lang="en">FAQ</span><span lang="fa">پرسش‌ها</span></a>
     <a class="gh" href="https://github.com/mrzroot/agentforge">GitHub</a>
-    <div class="lang" role="group" aria-label="Language"><button type="button" data-set-lang="en">EN</button><button type="button" data-set-lang="fa">فا</button></div>
+    <button type="button" class="mrz-tt" data-theme-toggle aria-label="Switch to dark mode" title="Switch to dark mode"><svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></g></svg><svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"/></svg></button><div class="lang" role="group" aria-label="Language"><button type="button" data-set-lang="en">EN</button><button type="button" data-set-lang="fa">فا</button></div>
   </nav>
 </div></header>
 
@@ -543,5 +582,16 @@ agentforge sync --targets cursor claude aider</pre></div>
   if(gio)gio.observe($('.gauge'));else{$('#arc').style.strokeDashoffset='0';$('#gv').textContent='100%'}
 })();
 </script>
+<script>/*mrz-theme-toggle*/(function(){var d=document.documentElement,q=window.matchMedia?matchMedia('(prefers-color-scheme: dark)'):null;
+function fa(){return d.getAttribute('data-lang')==='fa'||d.lang==='fa'}
+function sync(){var t=d.getAttribute('data-theme')==='dark'?'dark':'light',f=fa();
+document.querySelectorAll('[data-theme-toggle]').forEach(function(x){var l=t==='dark'?(f?'\u062a\u063a\u06cc\u06cc\u0631 \u0628\u0647 \u062d\u0627\u0644\u062a \u0631\u0648\u0634\u0646':'Switch to light mode'):(f?'\u062a\u063a\u06cc\u06cc\u0631 \u0628\u0647 \u062d\u0627\u0644\u062a \u062a\u06cc\u0631\u0647':'Switch to dark mode');x.setAttribute('aria-label',l);x.title=l;x.setAttribute('aria-pressed',t==='dark'?'true':'false')});
+document.querySelectorAll('picture source[media*="prefers-color-scheme"]').forEach(function(s){if(!s.getAttribute('data-mq'))s.setAttribute('data-mq',s.media);var wd=/dark/.test(s.getAttribute('data-mq'));s.media=(wd===(t==='dark'))?'all':'not all'});
+var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',t==='dark'?'#070b1a':'#f7f5ef')}
+function set(t,save){d.setAttribute('data-theme',t);d.style.colorScheme=t;if(save){try{localStorage.setItem('mrz-theme',t)}catch(e){}}try{document.dispatchEvent(new CustomEvent('mrz-theme',{detail:t}))}catch(e){}}
+document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-theme-toggle]');if(!b)return;set(d.getAttribute('data-theme')==='dark'?'light':'dark',true)});
+if(q&&q.addEventListener)q.addEventListener('change',function(){var m;try{m=localStorage.getItem('mrz-theme')}catch(e){}if(m!=='light'&&m!=='dark')set(q.matches?'dark':'light',false)});
+window.addEventListener('storage',function(e){if(e.key==='mrz-theme'){var m=e.newValue;set(m==='light'||m==='dark'?m:(q&&q.matches?'dark':'light'),false)}});
+if(window.MutationObserver)new MutationObserver(sync).observe(d,{attributes:true,attributeFilter:['data-lang','lang','data-theme']});sync()})()</script>
 </body>
 </html>
