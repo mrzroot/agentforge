@@ -45,3 +45,6 @@ html[data-theme=light] .wrap>span,html[data-theme=light] .wrap>span span{color:#
 html[data-theme=dark] .bar>span,html[data-theme=dark] .bar>span span{color:#947d69}
 html[data-theme=dark] .wrap>span,html[data-theme=dark] .wrap>span span{color:#8b7562}
 @media(max-width:520px){.top nav a{white-space:nowrap}.brand small{display:none}}
+
+/* QA: keep the "A" (automatic) badge anchored to the theme button */
+html .mrz-tt{position:relative}
