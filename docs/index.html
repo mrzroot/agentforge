@@ -2,8 +2,9 @@
 <html lang="en" data-lang="en" dir="ltr">
 <head>
 <meta charset="utf-8">
-<script>/*mrz-theme*/(function(){var d=document.documentElement,m='system';try{m=localStorage.getItem('mrz-theme')||'system'}catch(e){}var q=window.matchMedia?matchMedia('(prefers-color-scheme: dark)'):null;var t=m==='light'||m==='dark'?m:(q&&q.matches?'dark':'light');d.setAttribute('data-theme',t);d.style.colorScheme=t})()</script>
-<meta name="theme-color" content="#f7f5ef">
+<meta name="theme-color" content="#0a0705" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#e9e3da" media="(prefers-color-scheme: light)">
+<script>/*mrz-theme*/(function(){var d=document.documentElement,m='system';try{m=localStorage.getItem('mrz-theme')||'system'}catch(e){}if(m!=='light'&&m!=='dark')m='system';var q=window.matchMedia?matchMedia('(prefers-color-scheme: dark)'):null;var t=m==='system'?(q&&q.matches?'dark':'light'):m;d.setAttribute('data-theme',t);d.setAttribute('data-theme-mode',m);d.style.colorScheme=t})()</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>AgentForge · Forge your AI agent rules once, for every agent</title>
 <meta name="description" content="AgentForge compiles one .agentforge.yaml into rules for Cursor, Claude Code, Windsurf, Antigravity, Copilot, Aider and Cline, packs your code into token-light AST skeletons, lints rules for leaked secrets and ships 7 built-in skills. MIT, runs locally.">
@@ -228,7 +229,10 @@ footer a{color:var(--mut)}
 @media (max-width:640px){.top nav a.h,.gh,.brand small{display:none}.hero{padding:44px 0 64px}section{padding:70px 0}.packg,.skills{grid-template-columns:minmax(0,1fr)}.abody{grid-template-columns:minmax(0,1fr)}.src{border-inline-end:0;border-bottom:1px solid var(--line);max-height:170px}.meter{grid-template-columns:minmax(0,1fr)}.meter .n{font-size:32px}.tbl th,.tbl td{padding:10px 12px;font-size:13px}.tbl th:nth-child(3),.tbl td:nth-child(3){display:none}.anvil .bar b{display:none}.term{font-size:10.5px;overflow-x:auto}}
 @media (prefers-reduced-motion:reduce){#embers{display:none}.rv{opacity:1;transform:none}*{animation:none!important;transition:none!important}}
 </style>
-<style id="mrz-theme-css">
+<style id="mrz-theme-css">/*mrz-theme-badge*/[data-theme-toggle]{position:relative}
+html[data-theme-mode=system] [data-theme-toggle]::after{content:"A";position:absolute;inset-inline-end:-3px;bottom:-3px;min-width:13px;height:13px;padding:0 2px;box-sizing:border-box;border-radius:7px;font:700 8px/13px system-ui,sans-serif;letter-spacing:0;text-align:center;background:#14181f;color:#fff;box-shadow:0 0 0 1px rgba(255,255,255,.55);pointer-events:none}
+html[data-theme=dark][data-theme-mode=system] [data-theme-toggle]::after{background:#f3f4f6;color:#14181f;box-shadow:0 0 0 1px rgba(0,0,0,.5)}
+
 /* mrz theme toggle */
 .mrz-tt{all:unset;box-sizing:border-box;cursor:pointer;display:inline-grid;place-items:center;flex:none;width:34px;height:34px;border-radius:999px;color:inherit;border:1.5px solid currentColor;transition:transform .2s,background-color .2s}
 .mrz-tt:hover{transform:rotate(-12deg)}.mrz-tt:focus-visible{outline:2px solid #1fb5ad;outline-offset:3px}
@@ -582,16 +586,27 @@ agentforge sync --targets cursor claude aider</pre></div>
   if(gio)gio.observe($('.gauge'));else{$('#arc').style.strokeDashoffset='0';$('#gv').textContent='100%'}
 })();
 </script>
-<script>/*mrz-theme-toggle*/(function(){var d=document.documentElement,q=window.matchMedia?matchMedia('(prefers-color-scheme: dark)'):null;
+<script>/*mrz-theme-toggle v2*/(function(){if(window.__mrzTheme)return;window.__mrzTheme=1;
+var d=document.documentElement,K='mrz-theme',q=window.matchMedia?matchMedia('(prefers-color-scheme: dark)'):null;
 function fa(){return d.getAttribute('data-lang')==='fa'||d.lang==='fa'}
-function sync(){var t=d.getAttribute('data-theme')==='dark'?'dark':'light',f=fa();
-document.querySelectorAll('[data-theme-toggle]').forEach(function(x){var l=t==='dark'?(f?'\u062a\u063a\u06cc\u06cc\u0631 \u0628\u0647 \u062d\u0627\u0644\u062a \u0631\u0648\u0634\u0646':'Switch to light mode'):(f?'\u062a\u063a\u06cc\u06cc\u0631 \u0628\u0647 \u062d\u0627\u0644\u062a \u062a\u06cc\u0631\u0647':'Switch to dark mode');x.setAttribute('aria-label',l);x.title=l;x.setAttribute('aria-pressed',t==='dark'?'true':'false')});
-document.querySelectorAll('picture source[media*="prefers-color-scheme"]').forEach(function(s){if(!s.getAttribute('data-mq'))s.setAttribute('data-mq',s.media);var wd=/dark/.test(s.getAttribute('data-mq'));s.media=(wd===(t==='dark'))?'all':'not all'});
-var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',t==='dark'?'#070b1a':'#f7f5ef')}
-function set(t,save){d.setAttribute('data-theme',t);d.style.colorScheme=t;if(save){try{localStorage.setItem('mrz-theme',t)}catch(e){}}try{document.dispatchEvent(new CustomEvent('mrz-theme',{detail:t}))}catch(e){}}
-document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-theme-toggle]');if(!b)return;set(d.getAttribute('data-theme')==='dark'?'light':'dark',true)});
-if(q&&q.addEventListener)q.addEventListener('change',function(){var m;try{m=localStorage.getItem('mrz-theme')}catch(e){}if(m!=='light'&&m!=='dark')set(q.matches?'dark':'light',false)});
-window.addEventListener('storage',function(e){if(e.key==='mrz-theme'){var m=e.newValue;set(m==='light'||m==='dark'?m:(q&&q.matches?'dark':'light'),false)}});
-if(window.MutationObserver)new MutationObserver(sync).observe(d,{attributes:true,attributeFilter:['data-lang','lang','data-theme']});sync()})()</script>
+function get(){var m=null;try{m=localStorage.getItem(K)}catch(e){}return m==='light'||m==='dark'?m:'system'}
+function res(m){return m==='system'?(q&&q.matches?'dark':'light'):m}
+var metas=[].slice.call(document.querySelectorAll('meta[name="theme-color"]'));
+metas.forEach(function(x){x.setAttribute('data-c',x.getAttribute('content'));x.setAttribute('data-m',x.getAttribute('media')||'')});
+function tc(t,m){metas.forEach(function(x){if(m==='system'){x.setAttribute('content',x.getAttribute('data-c'));if(x.getAttribute('data-m'))x.setAttribute('media',x.getAttribute('data-m'))}else{var s=metas.filter(function(y){return /dark/.test(y.getAttribute('data-m'))===(t==='dark')})[0]||x;x.setAttribute('content',s.getAttribute('data-c'));x.removeAttribute('media')}})}
+var L={en:{system:'Theme: automatic, follows your system. Click for light',light:'Theme: light. Click for dark',dark:'Theme: dark. Click for automatic'},fa:{system:'پوسته: خودکار (مطابق سیستم). برای حالت روشن کلیک کنید',light:'پوسته: روشن. برای حالت تیره کلیک کنید',dark:'پوسته: تیره. برای حالت خودکار کلیک کنید'}};
+function sync(){var m=d.getAttribute('data-theme-mode')||'system',s=L[fa()?'fa':'en'][m],t=d.getAttribute('data-theme')==='dark'?'dark':'light';
+document.querySelectorAll('[data-theme-toggle]').forEach(function(x){x.setAttribute('aria-label',s);x.title=s;x.removeAttribute('aria-pressed')});
+document.querySelectorAll('picture source[media*="prefers-color-scheme"]').forEach(function(x){if(!x.getAttribute('data-mq'))x.setAttribute('data-mq',x.media);var wd=/dark/.test(x.getAttribute('data-mq'));x.media=(wd===(t==='dark'))?'all':'not all'})}
+function apply(m,save){var t=res(m);if(save){try{if(m==='system')localStorage.removeItem(K);else localStorage.setItem(K,m)}catch(e){}}
+d.setAttribute('data-theme',t);d.setAttribute('data-theme-mode',m);d.style.colorScheme=t;tc(t,m);sync();try{document.dispatchEvent(new CustomEvent('mrz-theme',{detail:t,mode:m}))}catch(e){}}
+var NX={system:'light',light:'dark',dark:'system'};
+document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-theme-toggle]');if(!b)return;apply(NX[get()],true)});
+function onq(){if(get()==='system')apply('system',false)}
+if(q){if(q.addEventListener)q.addEventListener('change',onq);else if(q.addListener)q.addListener(onq)}
+window.addEventListener('storage',function(e){if(e.key===K||e.key===null)apply(get(),false)});
+window.addEventListener('pageshow',function(e){if(e.persisted)apply(get(),false)});
+if(window.MutationObserver)new MutationObserver(sync).observe(d,{attributes:true,attributeFilter:['data-lang','lang']});
+/* normalise whatever the boot script set */apply(get(),false)})();</script>
 <script src="fx.js" defer></script></body>
 </html>

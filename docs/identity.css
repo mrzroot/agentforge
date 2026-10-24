@@ -35,3 +35,5 @@ html[dir=rtl] h2::after,html[data-lang=fa] h2::after{transform-origin:right}
 .sk:hover::before,.cat:hover::before,.sv:hover::before,.packg:hover::before,.lintg:hover::before{opacity:1}
 @media(max-width:520px){h1{font-size:clamp(46px,16vw,70px)!important}.brand .fa-name{display:none}}
 @media(prefers-reduced-motion:reduce){h1 .hot,h2::after,.hero::after,.anvil{animation:none}}
+/* light-mode contrast: amber text on the pale panel */
+html[data-theme=light] .tag,html[data-theme=light] .src .fn{color:#8a4a00!important}
