@@ -265,7 +265,7 @@ html[data-theme=light] .win{box-shadow:0 40px 80px -36px rgba(11,18,48,.3),0 0 6
 html[data-theme=light] .arrow{text-shadow:none}
 html[data-theme=light] .warn{background:rgba(232,176,75,.1)}
 </style>
-</head>
+<link rel="preload" href="fonts/big-shoulders.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="identity.css"></head>
 <body>
 <canvas id="embers" aria-hidden="true"></canvas>
 <header class="top"><div class="wrap">
@@ -593,5 +593,5 @@ document.addEventListener('click',function(e){var b=e.target.closest&&e.target.c
 if(q&&q.addEventListener)q.addEventListener('change',function(){var m;try{m=localStorage.getItem('mrz-theme')}catch(e){}if(m!=='light'&&m!=='dark')set(q.matches?'dark':'light',false)});
 window.addEventListener('storage',function(e){if(e.key==='mrz-theme'){var m=e.newValue;set(m==='light'||m==='dark'?m:(q&&q.matches?'dark':'light'),false)}});
 if(window.MutationObserver)new MutationObserver(sync).observe(d,{attributes:true,attributeFilter:['data-lang','lang','data-theme']});sync()})()</script>
-</body>
+<script src="fx.js" defer></script></body>
 </html>
