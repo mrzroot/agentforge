@@ -608,5 +608,6 @@ window.addEventListener('storage',function(e){if(e.key===K||e.key===null)apply(g
 window.addEventListener('pageshow',function(e){if(e.persisted)apply(get(),false)});
 if(window.MutationObserver)new MutationObserver(sync).observe(d,{attributes:true,attributeFilter:['data-lang','lang']});
 /* normalise whatever the boot script set */apply(get(),false)})();</script>
-<script src="fx.js" defer></script></body>
+<script src="fx.js" defer></script><script>/* keyboard access for horizontally scrollable code blocks */(function(){function f(){document.querySelectorAll('pre,.code,[id^=c-],#cmd,#c1,#t1').forEach(function(e){if(e.scrollWidth>e.clientWidth+1&&!e.hasAttribute('tabindex'))e.setAttribute('tabindex','0')})}addEventListener('load',f);addEventListener('resize',f);setTimeout(f,1500)})()</script>
+</body>
 </html>

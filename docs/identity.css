@@ -37,3 +37,11 @@ html[dir=rtl] h2::after,html[data-lang=fa] h2::after{transform-origin:right}
 @media(prefers-reduced-motion:reduce){h1 .hot,h2::after,.hero::after,.anvil{animation:none}}
 /* light-mode contrast: amber text on the pale panel */
 html[data-theme=light] .tag,html[data-theme=light] .src .fn{color:#8a4a00!important}
+/* QA: text contrast (AA) */
+html[data-theme=light] .brand small{color:#c53c09}
+html[data-theme=light] .eyebrow span,html[data-theme=light] .eyebrow span span{color:#8e5704}
+html[data-theme=light] .bar>span,html[data-theme=light] .bar>span span{color:#746352}
+html[data-theme=light] .wrap>span,html[data-theme=light] .wrap>span span{color:#716150}
+html[data-theme=dark] .bar>span,html[data-theme=dark] .bar>span span{color:#947d69}
+html[data-theme=dark] .wrap>span,html[data-theme=dark] .wrap>span span{color:#8b7562}
+@media(max-width:520px){.top nav a{white-space:nowrap}.brand small{display:none}}
