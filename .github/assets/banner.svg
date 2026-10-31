@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="320" viewBox="0 0 1280 320" role="img" aria-labelledby="t d">
+<title id="t">AgentForge</title><desc id="d">One rules file for every AI coding agent</desc>
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0f1115"/><stop offset="1" stop-color="#1b1f27"/></linearGradient>
+<linearGradient id="ac" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#f4a261"/><stop offset="1" stop-color="#e76f51"/></linearGradient>
+<pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M32 0H0V32" fill="none" stroke="#ffffff" stroke-opacity=".04"/></pattern>
+</defs>
+<style>
+.ttl{font:800 76px ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;fill:#f4f1ea;letter-spacing:-1px}
+.tag{font:500 26px ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;fill:#c9c4b8}
+.fa{font:500 24px Vazirmatn,Tahoma,"Segoe UI",sans-serif;fill:#9c978c}
+.glyph{font:700 120px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;fill:url(#ac);opacity:.9}
+.bar{animation:slide 6s ease-in-out infinite alternate}
+.cur{animation:blink 1.1s steps(1) infinite}
+.orb{animation:float 7s ease-in-out infinite alternate;transform-origin:center}
+@keyframes slide{from{transform:translateX(0)}to{transform:translateX(420px)}}
+@keyframes blink{50%{opacity:0}}
+@keyframes float{from{transform:translateY(-8px)}to{transform:translateY(8px)}}
+@media (prefers-reduced-motion: reduce){.bar,.cur,.orb{animation:none}}
+</style>
+<rect width="1280" height="320" rx="24" fill="url(#bg)"/>
+<rect width="1280" height="320" rx="24" fill="url(#grid)"/>
+<g class="orb"><circle cx="1110" cy="160" r="110" fill="url(#ac)" opacity=".14"/><text x="1110" y="200" text-anchor="middle" class="glyph">⚒</text></g>
+<text x="64" y="150" class="ttl">AgentForge<tspan class="cur" fill="#f4a261">_</tspan></text>
+<text x="64" y="204" class="tag">One rules file for every AI coding agent</text>
+
+<rect x="64" y="282" width="760" height="4" rx="2" fill="#ffffff" opacity=".06"/>
+<rect class="bar" x="64" y="282" width="340" height="4" rx="2" fill="url(#ac)"/>
+</svg>

@@ -1,13 +1,14 @@
-<div align="center">
+<p align="center"><img src=".github/assets/banner.svg" alt="AgentForge: One rules file for every AI coding agent" width="100%"></p>
 
-```
-   █████╗  ██████╗ ███████╗███╗   ██╗████████╗███████╗ ██████╗ ██████╗  ██████╗ ███████╗
-  ██╔══██╗██╔════╝ ██╔════╝████╗  ██║╚══██╔══╝██╔════╝██╔═══██╗██╔══██╗██╔════╝ ██╔════╝
-  ███████║██║  ███╗█████╗  ██╔██╗ ██║   ██║   █████╗  ██║   ██║██████╔╝██║  ███╗█████╗  
-  ██╔══██║██║   ██║██╔══╝  ██║╚██╗██║   ██║   ██╔══╝  ██║   ██║██╔══██╗██║   ██║██╔══╝  
-  ██║  ██║╚██████╔╝███████╗██║ ╚████║   ██║   ██║     ╚██████╔╝██║  ██║╚██████╔╝███████╗
-  ╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚═╝  ╚═══╝   ╚═╝   ╚═╝      ╚═════╝ ╚═╝  ╚═╝ ╚═════╝ ╚══════╝
-```
+<p align="center">
+  <a href="LICENSE"><img alt="License" src="https://img.shields.io/github/license/mrzroot/agentforge?style=flat-square"></a>
+  <img alt="Node 18+" src="https://img.shields.io/badge/node-18%2B-339933?style=flat-square">
+  <a href="https://github.com/mrzroot/agentforge/commits"><img alt="Last commit" src="https://img.shields.io/github/last-commit/mrzroot/agentforge?style=flat-square"></a>
+</p>
+
+<p align="center"><a href="https://mrzroot.github.io/agentforge/">Website</a> · <a href="CHANGELOG.md">Changelog</a> · <a href="CONTRIBUTING.md">Contributing</a></p>
+
+<div align="center">
 
 # ⚡ AgentForge
 ### *The Universal AI Coding Agent Toolkit & Operating System*
