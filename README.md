@@ -16,7 +16,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Node.js](https://img.shields.io/badge/Node.js-%3E%3D18.0.0-brightgreen.svg)](https://nodejs.org)
 [![Version](https://img.shields.io/badge/version-v1.0.0-blue.svg)](https://github.com/mrzroot/agentforge)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 [![GitHub Stars](https://img.shields.io/github/stars/mrzroot/agentforge?style=social)](https://github.com/mrzroot/agentforge)
 
 **Single Source of Truth for all your AI Coding Agents + AST Context Compressor + Rule Linter + 7 Built-in Agent Skills.**
