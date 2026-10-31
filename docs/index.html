@@ -361,7 +361,7 @@ html[data-theme=light] .warn{background:rgba(232,176,75,.1)}
   add(item: <span class="t">Item</span>): <span class="t">void</span> { <span class="k">this</span>.items.push(item); console.log(<span class="c">'added'</span>, item.id); }
   clear(): <span class="t">void</span> { <span class="k">this</span>.items = []; }
 }</pre></div>
-    <div class="code"><div class="h"><b>PROJECT_CONTEXT.md</b><em><span lang="en">skeleton</span><span lang="fa">اسکلت</span> · ~113 tok</em></div>
+    <div class="code"><div class="h"><b>PROJECT_CONTEXT.md</b><em><span lang="en">skeleton</span><span lang="fa">اسکلت</span> · ~114 tok</em></div>
 <pre><span class="k">export interface</span> <span class="t">Item</span> { id: <span class="t">string</span>; price: <span class="t">number</span>; qty: <span class="t">number</span> }
 <span class="c">/** Sum the cart total in rials */</span>
 <span class="k">export function</span> total(items: <span class="t">Item</span>[]): <span class="t">number</span> <span class="x">{ /* ... */ }</span>
@@ -378,7 +378,7 @@ html[data-theme=light] .warn{background:rgba(232,176,75,.1)}
     <div><div class="track"><b></b><i id="bar"></i></div><div class="lbl"><span lang="en">tokens sent to the model</span><span lang="fa">توکن‌های ارسالی به مدل</span><span id="pct">0%</span></div></div>
     <button class="fbtn" type="button" id="packbtn"><span lang="en">Run pack</span><span lang="fa">اجرای pack</span></button>
   </div>
-  <p class="bench rv"><span lang="en">This tiny file has little body to strip, so it saves ~51%. On the bundled benchmark samples, <code>npm run benchmark</code> measures <b>8–23% less</b>; files with long function bodies shrink more. Token counts are a fast local estimate, not a model tokenizer.</span><span lang="fa">این فایل کوچک بدنهٔ زیادی ندارد و حدود ۵۱٪ صرفه‌جویی می‌کند. روی نمونه‌های بنچمارکِ همراه پروژه، <code>npm run benchmark</code> حدود <b>۸ تا ۲۳٪ کاهش</b> اندازه می‌گیرد؛ فایل‌هایی با بدنهٔ طولانی‌تر بیشتر کوچک می‌شوند. شمارش توکن یک تخمین سریع محلی است، نه توکنایزر واقعی مدل.</span></p>
+  <p class="bench rv"><span lang="en">This replays a real <code>agentforge pack</code> run on this sample file: 233 → 114 tokens, about 51% less. A hand-picked sample flatters the number; on the bundled benchmark samples, <code>npm run benchmark</code> measures <b>8–23% less</b>; files with long function bodies shrink more. Token counts are a fast local estimate, not a model tokenizer.</span><span lang="fa">این بازپخشِ یک اجرای واقعی <code>agentforge pack</code> روی همین فایل نمونه است: ۲۳۳ ← ۱۱۴ توکن، حدود ۵۱٪ کمتر. یک نمونهٔ دست‌چین عدد را بهتر از واقعیت نشان می‌دهد؛ روی نمونه‌های بنچمارکِ همراه پروژه، <code>npm run benchmark</code> حدود <b>۸ تا ۲۳٪ کاهش</b> اندازه می‌گیرد؛ فایل‌هایی با بدنهٔ طولانی‌تر بیشتر کوچک می‌شوند. شمارش توکن یک تخمین سریع محلی است، نه توکنایزر واقعی مدل.</span></p>
   <div class="langs rv"><span>TypeScript</span><span>JavaScript</span><span>Python</span><span>Go</span><span>Rust</span><span>PHP</span><span>JSON</span></div>
 </div></section>
 
