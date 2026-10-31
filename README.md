@@ -19,7 +19,7 @@
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
 [![GitHub Stars](https://img.shields.io/github/stars/mrzroot/agentforge?style=social)](https://github.com/mrzroot/agentforge)
 
-**Single Source of Truth for all your AI Coding Agents + 85% Token AST Compressor + Rule Linter + 7 Built-in Agent Skills.**
+**Single Source of Truth for all your AI Coding Agents + AST Context Compressor + Rule Linter + 7 Built-in Agent Skills.**
 
 [Quickstart](#-quickstart-in-30-seconds) • [Features](#-core-features) • [Comparison](#-comparison-matrix) • [Web Studio](#-interactive-web-studio) • [Skills Library](#-curated-skills-library)
 
@@ -38,7 +38,7 @@ Developers using AI coding assistants are trapped in fragmented configurations:
 
 AgentForge acts as the **Universal Operating System** for your AI workflow:
 - 🔄 **One-Command Multi-Agent Sync**: Edit rules once in `.agentforge.yaml` $\to$ automatically compiles to all 7+ agent formats.
-- ⚡ **Token-Killer AST Skeletonizer**: Shrinks codebases into AST signature skeletons, saving **80% - 90%** of prompt tokens.
+- ⚡ **Token-Killer AST Skeletonizer**: Shrinks codebases into AST signature skeletons, keeping signatures and dropping bodies (the bundled samples shrink by 8-23%; heavier files with long function bodies shrink more).
 - 🛡️ **Rule & Prompt Linter**: Audits rules for security vulnerabilities, exposed API keys, prompt conflicts, and bloat.
 - 🧩 **Built-in Skills Marketplace**: 1-click install modular capabilities (`tdd-architect`, `security-auditor`, `minimalist-architect`, `fastapi-master`, etc.).
 - 🎨 **Visual Web Studio & TUI**: Interactive Terminal UI and local dark-mode glassmorphism web dashboard.
@@ -84,7 +84,7 @@ npm link             # `agentforge` (and `af`) are now on your PATH
 | Feature | Manual Rules | Cursor Only | Claude Only | **AgentForge** ⚡ |
 | :--- | :---: | :---: | :---: | :---: |
 | **Multi-Agent Sync** (Cursor, Claude, Windsurf, Antigravity, Copilot, Aider, Cline) | ❌ | ❌ | ❌ | **✅ Full Support** |
-| **AST Token Compression** (80-90% token reduction) | ❌ | ❌ | ❌ | **✅ Built-in** |
+| **AST Token Compression** | ❌ | ❌ | ❌ | **✅ Built-in** |
 | **Secret & API Key Scanner in Rules** | ❌ | ❌ | ❌ | **✅ Built-in** |
 | **Prompt Conflict & Bloat Linter** | ❌ | ❌ | ❌ | **✅ Built-in** |
 | **Curated Skills Library** | ❌ | ❌ | ❌ | **✅ 7 Built-in Skills** |
@@ -115,10 +115,7 @@ Extracts structural interfaces, function signatures, types, and docstrings while
 agentforge pack --out PROJECT_CONTEXT.md
 ```
 
-**Token Benchmark:**
-- Original Codebase: `48,200 tokens (~$0.24 per prompt)`
-- AgentForge AST Skeleton: `6,150 tokens (~$0.03 per prompt)`
-- **Savings: 87.2% reduction in context window usage!**
+**Measure it yourself:** `npm run benchmark` prints the real reduction on the bundled samples (22.5% on the sample file when last run on 2026-10-31) next to a *simulated* 50-turn session estimate. Your savings depend on how much of your code is function bodies.
 
 ### 3. `agentforge lint`
 Calculates an automated **Agent Health Score (0 - 100%)**:
