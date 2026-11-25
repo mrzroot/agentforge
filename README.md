@@ -47,6 +47,8 @@ AgentForge acts as the **Universal Operating System** for your AI workflow:
 
 ## ⚡ Quickstart in 30 Seconds
 
+**Review generated rules in Git.** Try this on a fresh branch. Review both tracked and new files before committing; keep credentials out of the generated rules and context.
+
 > **Note:** AgentForge is **not published on npm yet**, so `npx agentforge` / `npm install -g agentforge` will not work. Run it from GitHub instead (Node.js 18+, npm 10+ recommended).
 
 Run directly from GitHub with `npx` (it builds on install):

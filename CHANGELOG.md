@@ -6,6 +6,8 @@ see the [commit history](https://github.com/mrzroot/agentforge/commits).
 
 ## [Unreleased]
 
+- Docs: Review generated rules in Git.
+
 ### Changed
 - README rewritten: banner, plain-language introduction, quick start and contributing sections.
 - Added issue templates and this changelog.

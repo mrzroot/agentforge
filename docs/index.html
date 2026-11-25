@@ -500,6 +500,11 @@ agentforge sync --targets cursor claude aider</pre></div>
   <h2 class="rv"><span lang="en">One file in.<br><span class="hot">Every agent aligned.</span></span><span lang="fa">یک فایل ورودی.<br><span class="hot">همهٔ ایجنت‌ها هماهنگ.</span></span></h2>
   <div class="cta rv"><a class="btn p" href="#start"><span lang="en">Get started</span><span lang="fa">شروع کنید</span></a><a class="btn" href="https://github.com/mrzroot/agentforge">★ GitHub</a></div>
 </div></section>
+<section id="review-workflow" class="mx mx-sec" aria-labelledby="review-workflow-title" style="max-width:68rem;margin:3rem auto;padding-inline:1rem"><h2 id="review-workflow-title"><span lang="en">Review generated rules in Git</span><span lang="fa" dir="rtl">خروجی قواعد را پیش از کامیت بررسی کنید</span></h2><p lang="en">Try this on a fresh branch. Review both tracked and new files before committing; keep credentials out of the generated rules and context.</p><p lang="fa" dir="rtl">روی یک شاخهٔ جدا شروع کنید. فایل‌های جدید و تغییریافته را پیش از کامیت بررسی کنید و رمزها را در قواعد یا زمینه نگذارید.</p><pre dir="ltr" style="overflow-x:auto;text-align:left"><code>npx github:mrzroot/agentforge init
+npx github:mrzroot/agentforge lint
+npx github:mrzroot/agentforge sync
+git status --short
+git diff</code></pre></section>
 </main>
 
 <footer><div class="wrap">
