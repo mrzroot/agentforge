@@ -1,5 +1,5 @@
 /* agentforge identity: "forge". Charred black + molten orange, Big Shoulders Display, heat-cooling headline, ember field with click-to-strike. */
-@font-face{font-family:'Big Shoulders';src:url(fonts/big-shoulders.woff2) format('woff2');font-weight:100 900;font-display:swap}
+
 html[data-theme=dark]:root{--bg:#0a0705;--bg2:#100b07;--panel:#150e09;--panel2:#1c130c;--line:#2d1d11;--line2:#4a2e18;--fg:#f8ece0;--mut:#bba18b;--dim:#85705e;--molt:#ff5a14;--amb:#ffb020;--hot:#ff3d00}
 html[data-theme=light]:root{--bg:#e9e3da;--bg2:#e0d8cc;--panel:#f6f1e8;--panel2:#ede6d9;--line:#cfc4b2;--line2:#b5a58c;--fg:#1d130b;--mut:#5b4a3a;--dim:#7d6b58;--molt:#d4400a;--amb:#c77a06;--hot:#b8300a}
 h1,h2,.brand{font-family:'Big Shoulders',Vazirmatn,Impact,sans-serif}

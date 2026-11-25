@@ -19,7 +19,7 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <script>(function(){var d=document.documentElement,l='fa';try{l=new URLSearchParams(location.search).get('lang')||localStorage.getItem('mrz-lang')||'fa'}catch(e){}if(l!=='en')l='fa';d.lang=l;d.dir=l==='fa'?'rtl':'ltr';d.setAttribute('data-lang',l)})()</script>
 <style>
-@font-face{font-family:Vazirmatn;src:url(fonts/vazirmatn-arabic.woff2) format('woff2');font-weight:400 800;font-display:swap;unicode-range:U+0600-06FF,U+0750-077F,U+200C-200E,U+FB50-FDFF,U+FE70-FEFC}
+
 :root{--bg:#0b0806;--bg2:#120d09;--panel:#16100b;--panel2:#1d150f;--line:#2c2017;--line2:#3d2c1f;--fg:#f6ede4;--mut:#b09c8b;--dim:#7a6758;
 --molt:#ff6a1a;--amb:#ffb020;--hot:#ff3d00;--steel:#a6b0ba;--ok:#8be36b;--bad:#ff5f56;--info:#7cc7ff;
 --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,Vazirmatn,sans-serif;--fa:Vazirmatn,"Segoe UI",Tahoma,sans-serif;--mono:ui-monospace,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace}
@@ -269,7 +269,9 @@ html[data-theme=light] .win{box-shadow:0 40px 80px -36px rgba(11,18,48,.3),0 0 6
 html[data-theme=light] .arrow{text-shadow:none}
 html[data-theme=light] .warn{background:rgba(232,176,75,.1)}
 </style>
-<link rel="preload" href="fonts/big-shoulders.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="identity.css"></head>
+<link rel="stylesheet" href="identity.css"><link rel="preload" href="fonts/Vazirmatn.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="redesign.css">
+</head>
 <body>
 <canvas id="embers" aria-hidden="true"></canvas>
 <header class="top"><div class="wrap">
@@ -288,6 +290,7 @@ html[data-theme=light] .warn{background:rgba(232,176,75,.1)}
 <main>
 <section class="hero"><div class="wrap">
   <div>
+    <div class="studio-index"><b>01</b><span lang="en">RULE COMPILER</span><span lang="fa">کارگاه کامپایل قوانین</span></div>
     <span class="tag"><i></i><span lang="en">MIT · Node 18+ · runs 100% locally</span><span lang="fa">MIT · Node 18+ · کاملاً محلی</span></span>
     <h1><span lang="en">Write the rules once.<br><span class="hot">Forge them for every agent.</span></span><span lang="fa">قوانین را یک بار بنویسید.<br><span class="hot">برای همهٔ ایجنت‌ها بسازید.</span></span></h1>
     <p class="lead"><span lang="en">AgentForge turns one <b>.agentforge.yaml</b> into native rule files for <b>Cursor, Claude Code, Windsurf, Antigravity, Copilot, Aider and Cline</b>, packs your code into token-light AST skeletons, lints your rules for leaked keys and dangerous directives, and ships 7 built-in skills.</span><span lang="fa">ایجنت‌فورج یک فایل <b>‎.agentforge.yaml</b> را به فایل‌های قانون بومیِ <b>Cursor، Claude Code، Windsurf، Antigravity، Copilot، Aider و Cline</b> تبدیل می‌کند، کدتان را به اسکلت‌های AST کم‌توکن فشرده می‌کند، قوانین را برای کلیدهای لورفته و دستورهای خطرناک بررسی می‌کند و ۷ مهارت آماده دارد.</span></p>
@@ -500,6 +503,11 @@ agentforge sync --targets cursor claude aider</pre></div>
   <h2 class="rv"><span lang="en">One file in.<br><span class="hot">Every agent aligned.</span></span><span lang="fa">یک فایل ورودی.<br><span class="hot">همهٔ ایجنت‌ها هماهنگ.</span></span></h2>
   <div class="cta rv"><a class="btn p" href="#start"><span lang="en">Get started</span><span lang="fa">شروع کنید</span></a><a class="btn" href="https://github.com/mrzroot/agentforge">★ GitHub</a></div>
 </div></section>
+<section id="review-workflow" class="mx mx-sec" aria-labelledby="review-workflow-title" style="max-width:68rem;margin:3rem auto;padding-inline:1rem"><h2 id="review-workflow-title"><span lang="en">Review generated rules in Git</span><span lang="fa" dir="rtl">خروجی قواعد را پیش از کامیت بررسی کنید</span></h2><p lang="en">Try this on a fresh branch. Review both tracked and new files before committing; keep credentials out of the generated rules and context.</p><p lang="fa" dir="rtl">روی یک شاخهٔ جدا شروع کنید. فایل‌های جدید و تغییریافته را پیش از کامیت بررسی کنید و رمزها را در قواعد یا زمینه نگذارید.</p><pre dir="ltr" style="overflow-x:auto;text-align:left"><code>npx github:mrzroot/agentforge init
+npx github:mrzroot/agentforge lint
+npx github:mrzroot/agentforge sync
+git status --short
+git diff</code></pre></section>
 </main>
 
 <footer><div class="wrap">
