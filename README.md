@@ -15,7 +15,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Node.js](https://img.shields.io/badge/Node.js-%3E%3D18.0.0-brightgreen.svg)](https://nodejs.org)
-[![Version](https://img.shields.io/badge/version-v1.0.0-blue.svg)](https://github.com/mrzroot/agentforge)
+[![Version](https://img.shields.io/badge/version-v1.1.0-blue.svg)](https://github.com/mrzroot/agentforge/releases/tag/v1.1.0)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 [![GitHub Stars](https://img.shields.io/github/stars/mrzroot/agentforge?style=social)](https://github.com/mrzroot/agentforge)
 
@@ -103,9 +103,12 @@ Compiles your single source of truth (`.agentforge.yaml`) into targeted formats:
 - 🤖 **GitHub Copilot**: `.github/copilot-instructions.md`
 - 🦙 **Aider**: `.aider.conf.yml` & `.aider.prompt.md`
 - 🦘 **Roo Code / Cline**: `.clinerules`
+- 🤖 **OpenAI Codex**: `AGENTS.md`
+- ✨ **Gemini CLI**: `GEMINI.md`
 
 ```bash
-agentforge sync --targets cursor claude windsurf
+agentforge sync --targets cursor claude windsurf codex gemini
+agentforge doctor --json --strict
 ```
 
 ### 2. `agentforge pack` (Token-Killer Engine)

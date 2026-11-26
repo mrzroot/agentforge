@@ -1,6 +1,6 @@
 {
   "name": "agentforge",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "The Universal AI Coding Agent Toolkit & OS. Sync rules across Cursor, Claude Code, Windsurf, Antigravity, Copilot, Roo, & Aider + AST Token Compressor (8–23% measured on the bundled samples) + Rule Linter + 7 built-in Agent Skills.",
   "main": "dist/index.js",
   "bin": {

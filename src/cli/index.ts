@@ -10,6 +10,7 @@ import { lintAgentRules } from '../core/linter/linter';
 import { getAvailableSkills, findSkillById } from '../core/skills/registry';
 import { createServer } from '../server/app';
 import { SupportedAgent } from '../core/sync/types';
+import { runDoctor } from '../core/doctor/doctor';
 
 export function createCli(): Command {
   const program = new Command();
@@ -17,7 +18,7 @@ export function createCli(): Command {
   program
     .name('agentforge')
     .description('⚡ The Universal AI Coding Agent Toolkit & Operating System')
-    .version('1.0.0');
+    .version('1.1.0');
 
   // init command
   program
@@ -49,7 +50,7 @@ export function createCli(): Command {
   program
     .command('sync')
     .description('Compile and synchronize rules across all AI coding agents')
-    .option('-t, --targets <agents...>', 'Specific agents to sync (cursor, claude, windsurf, antigravity, copilot, aider, cline)')
+    .option('-t, --targets <agents...>', 'Specific agents to sync (cursor, claude, windsurf, antigravity, copilot, aider, cline, codex, gemini)')
     .option('-d, --dry-run', 'Simulate sync without writing files')
     .action((options) => {
       logger.banner();
@@ -173,6 +174,31 @@ export function createCli(): Command {
 
       logger.success(`Installed skill: ${chalk.bold.cyan(skill.name)}!`);
       logger.info(`Run ${chalk.cyan('agentforge sync')} to push new skill directives to all your AI agents.`);
+    });
+
+  // doctor command
+  program
+    .command('doctor')
+    .description('Audit config, target rule drift, and rule health score')
+    .option('--json', 'Output structured JSON report')
+    .option('--strict', 'Exit with code 1 if any drift, warning, or failure is found')
+    .action((options) => {
+      const cwd = process.cwd();
+      const report = runDoctor(cwd);
+      if (options.json) {
+        console.log(JSON.stringify(report, null, 2));
+      } else {
+        logger.banner();
+        logger.info(`AgentForge Doctor (${report.healthy ? chalk.green('HEALTHY') : chalk.yellow('DRIFT / ISSUES DETECTED')})`);
+        for (const chk of report.checks) {
+          const icon = chk.level === 'ok' ? chalk.green('✔') : chk.level === 'warn' ? chalk.yellow('!') : chalk.red('✖');
+          console.log(`  ${icon} [${chk.area}] ${chk.message}`);
+          if (chk.fix) console.log(chalk.dim(`      → ${chk.fix}`));
+        }
+      }
+      if (options.strict && !report.healthy) {
+        process.exitCode = 1;
+      }
     });
 
   // ui command

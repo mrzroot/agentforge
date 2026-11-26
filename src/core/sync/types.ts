@@ -5,7 +5,9 @@ export type SupportedAgent =
   | 'antigravity' 
   | 'copilot' 
   | 'aider' 
-  | 'cline';
+  | 'cline'
+  | 'codex'
+  | 'gemini';
 
 export interface AgentRuleGroup {
   name: string;

@@ -8,6 +8,8 @@ import { generateAntigravityRules } from './antigravity';
 import { generateCopilotRules } from './copilot';
 import { generateAiderRules } from './aider';
 import { generateClineRules } from './cline';
+import { generateCodexRules } from './codex';
+import { generateGeminiRules } from './gemini';
 
 export function syncAgentRules(
   config: AgentForgeConfig,
@@ -44,6 +46,12 @@ export function syncAgentRules(
         break;
       case 'cline':
         output = generateClineRules(config);
+        break;
+      case 'codex':
+        output = generateCodexRules(config);
+        break;
+      case 'gemini':
+        output = generateGeminiRules(config);
         break;
       default:
         warnings.push(`Unknown agent target: ${target}`);

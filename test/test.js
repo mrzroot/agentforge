@@ -5,6 +5,10 @@ const { lintAgentRules } = require('../dist/core/linter/linter');
 const { syncAgentRules } = require('../dist/core/sync/engine');
 const { DEFAULT_CONFIG } = require('../dist/utils/config');
 const { getAvailableSkills } = require('../dist/core/skills/registry');
+const { runDoctor } = require('../dist/core/doctor/doctor');
+const fs = require('fs');
+const os = require('os');
+const path = require('path');
 
 console.log('🧪 Running AgentForge Automated Test Suite...\n');
 
@@ -47,15 +51,33 @@ assert(typeof report.score === 'number');
 assert(report.score >= 0 && report.score <= 100);
 console.log(`✔ Linter Rule Audit passed (Health Score: ${report.score}%).`);
 
-// 4. Test Multi-Agent Sync
-const syncRes = syncAgentRules(DEFAULT_CONFIG, ['cursor', 'claude', 'windsurf', 'antigravity', 'copilot'], { dryRun: true });
+// 4. Test Multi-Agent Sync (including Codex AGENTS.md and Gemini GEMINI.md)
+const syncRes = syncAgentRules(DEFAULT_CONFIG, ['cursor', 'claude', 'windsurf', 'antigravity', 'copilot', 'codex', 'gemini'], { dryRun: true });
 assert(syncRes.success === true);
-assert(syncRes.outputs.length === 5);
-console.log(`✔ Multi-Agent Sync engine passed (${syncRes.outputs.length} platforms synced).`);
+assert(syncRes.outputs.length === 7);
+const allPaths = syncRes.outputs.flatMap(o => o.files.map(f => f.path));
+assert(allPaths.includes('AGENTS.md'));
+assert(allPaths.includes('GEMINI.md'));
+console.log(`✔ Multi-Agent Sync engine passed (${syncRes.outputs.length} platforms synced, incl. Codex & Gemini CLI).`);
 
 // 5. Test Skills Registry
 const skills = getAvailableSkills();
 assert(skills.length >= 5);
 console.log(`✔ Skills Registry passed (${skills.length} curated skills available).`);
+
+// 6. Test Doctor drift detection
+const tmpRepo = fs.mkdtempSync(path.join(os.tmpdir(), 'af-doctor-'));
+const docBefore = runDoctor(tmpRepo);
+assert(docBefore.healthy === false);
+assert(docBefore.missingFiles.length > 0);
+fs.writeFileSync(path.join(tmpRepo, 'agentforge.json'), JSON.stringify(DEFAULT_CONFIG), 'utf-8');
+syncAgentRules(DEFAULT_CONFIG, undefined, { cwd: tmpRepo });
+const docAfter = runDoctor(tmpRepo);
+assert(docAfter.healthy === true);
+fs.writeFileSync(path.join(tmpRepo, 'CLAUDE.md'), '# hand-edited drift\n', 'utf-8');
+const docDrift = runDoctor(tmpRepo);
+assert(docDrift.healthy === false);
+assert(docDrift.driftedFiles.includes('CLAUDE.md'));
+console.log('✔ AgentForge Doctor drift detection passed.');
 
 console.log('\n🎉 ALL AGENTFORGE TESTS PASSED SUCCESSFULLY! 🚀');

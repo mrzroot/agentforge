@@ -275,7 +275,7 @@ html[data-theme=light] .warn{background:rgba(232,176,75,.1)}
 <body>
 <canvas id="embers" aria-hidden="true"></canvas>
 <header class="top"><div class="wrap">
-  <a class="brand" href="#"><img src="favicon.svg" alt="">AgentForge <small>v1.0.0</small></a>
+  <a class="brand" href="#"><img src="favicon.svg" alt="">AgentForge <small>v1.1.0</small></a>
   <nav>
     <a class="h" href="#pack"><span lang="en">Pack</span><span lang="fa">فشرده‌سازی</span></a>
     <a class="h" href="#lint"><span lang="en">Lint</span><span lang="fa">لینتر</span></a>
@@ -437,6 +437,8 @@ html[data-theme=light] .warn{background:rgba(232,176,75,.1)}
     <tr><td>GitHub Copilot</td><td><code>.github/copilot-instructions.md</code></td><td><code>copilot</code></td></tr>
     <tr><td>Aider</td><td><code>.aider.conf.yml</code> · <code>.aider.prompt.md</code></td><td><code>aider</code></td></tr>
     <tr><td>Cline / Roo Code</td><td><code>.clinerules</code></td><td><code>cline</code></td></tr>
+    <tr><td>OpenAI Codex</td><td><code>AGENTS.md</code></td><td><code>codex</code></td></tr>
+    <tr><td>Gemini CLI</td><td><code>GEMINI.md</code></td><td><code>gemini</code></td></tr>
   </tbody></table></div>
 </div></section>
 
@@ -482,6 +484,7 @@ agentforge sync --targets cursor claude aider</pre></div>
       <div><code>sync [-t …] [--dry-run]</code><span lang="en">Compile rules for every target agent</span><span lang="fa">کامپایل قوانین برای همهٔ ایجنت‌های مقصد</span></div>
       <div><code>pack [-o PROJECT_CONTEXT.md]</code><span lang="en">Write a token-light AST context bundle</span><span lang="fa">نوشتن بستهٔ کانتکست AST کم‌توکن</span></div>
       <div><code>lint</code><span lang="en">Score rules for security, clarity and bloat</span><span lang="fa">امتیازدهی قوانین از نظر امنیت، وضوح و حجم</span></div>
+      <div><code>doctor [--json] [--strict]</code><span lang="en">Audit config, rule drift across targets, and health score</span><span lang="fa">ممیزی پیکربندی، تشخیص ناهماهنگی فایل‌های مقصد و امتیاز سلامت</span></div>
       <div><code>skills list · skills add &lt;id&gt;</code><span lang="en">Browse and install built-in skills</span><span lang="fa">مرور و نصب مهارت‌های آماده</span></div>
       <div><code>ui [-p 3737]</code><span lang="en">Launch the local Web Studio</span><span lang="fa">اجرای استودیوی وب محلی</span></div>
     </div>
@@ -512,7 +515,7 @@ git diff</code></pre></section>
 
 <footer><div class="wrap">
   <span><span lang="en">AgentForge · MIT · by</span><span lang="fa">ایجنت‌فورج · MIT · ساختهٔ</span> <a href="https://mrzroot.github.io/">mrzroot</a></span>
-  <span><a href="https://mrzroot.github.io/projects/"><span lang="en">More projects</span><span lang="fa">پروژه‌های دیگر</span></a> · <span lang="en">v1.0.0 (package version; no GitHub release yet)</span><span lang="fa">نسخهٔ 1.0.0 (نسخهٔ پکیج؛ هنوز release در گیت‌هاب ندارد)</span> · <a href="https://github.com/mrzroot/agentforge/blob/master/CHANGELOG.md">Changelog</a> · <a href="https://github.com/mrzroot/agentforge/issues"><span lang="en">Issues</span><span lang="fa">گزارش مشکل</span></a></span>
+  <span><a href="https://mrzroot.github.io/projects/"><span lang="en">More projects</span><span lang="fa">پروژه‌های دیگر</span></a> · <a href="https://github.com/mrzroot/agentforge/releases/tag/v1.1.0"><span lang="en">v1.1.0</span><span lang="fa">نسخهٔ 1.1.0</span></a> · <a href="https://github.com/mrzroot/agentforge/blob/master/CHANGELOG.md">Changelog</a> · <a href="https://github.com/mrzroot/agentforge/issues"><span lang="en">Issues</span><span lang="fa">گزارش مشکل</span></a></span>
 </div></footer>
 
 <script>
