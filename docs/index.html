@@ -271,7 +271,7 @@ html[data-theme=light] .warn{background:rgba(232,176,75,.1)}
 </style>
 <link rel="stylesheet" href="identity.css"><link rel="preload" href="fonts/Vazirmatn.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="redesign.css">
-<link rel="stylesheet" href="/assets/studio-mark.css"></head>
+<link rel="stylesheet" href="/assets/studio-mark.css"><link rel="stylesheet" href="/assets/portfolio/embed.css"><script defer src="/assets/portfolio/exhibit.js"></script></head>
 <body>
 <canvas id="embers" aria-hidden="true"></canvas>
 <header class="top"><div class="wrap">
@@ -334,11 +334,32 @@ html[data-theme=light] .warn{background:rgba(232,176,75,.1)}
     <div class="term" id="term"><p><span class="ps">$ </span><span class="cur"></span></p></div>
   </div>
 </div></section>
-<aside class="studio-project-entry" style="--entry-color:#f8b5a1">
-  <img src="/assets/thumbs/agentforge.webp" alt="" width="160" height="100" loading="lazy" decoding="async">
-  <div><strong>یک قانون مشترک برای دو ویرایشگر</strong><small>هر دو قالب را از یک قانون بساز</small></div>
-  <a href="/playground/?project=agentforge&amp;lang=fa">سناریو را امتحان کن ↗</a>
-</aside>
+<div class="atlas-embedded" data-motif="layers" style="--exhibit-hue:14"><section class="exhibit-studio" id="portfolio-example" data-project="agentforge" data-motif="layers" data-state="0" aria-labelledby="portfolio-example-title">
+    <div class="exhibit-studio-head"><div><p class="exhibit-kicker"><span class="pf-en" lang="en">Illustrative sample</span><span class="pf-fa" lang="fa">دادهٔ نمونه</span></p><h2 id="portfolio-example-title"><span class="pf-en" lang="en">Open a layer</span><span class="pf-fa" lang="fa">یک لایه را باز کن</span></h2></div>
+       <a href="/projects/guide/agentforge/"><span class="pf-en" lang="en">Interactive introduction</span><span class="pf-fa" lang="fa">معرفی تعاملی</span> <i class="exhibit-arrow" aria-hidden="true"></i></a></div>
+    <div class="exhibit-lab">
+      <div class="stage-picture" aria-hidden="true">
+        <div class="stage-sign"><i></i><i></i><i></i><strong dir="ltr">AgentForge</strong></div>
+
+        <div class="stage-track" dir="ltr"></div>
+        <div class="stage-evidence" dir="ltr"><span dir="auto">rule · one project</span><span dir="auto">format · two targets</span></div>
+      </div>
+      <div class="stage-work">
+        <p><span class="pf-en" lang="en">Two assistants edit one repository, but read their project rules from different files.</span><span class="pf-fa" lang="fa">دو دستیار یک مخزن را ویرایش می‌کنند، اما قانون پروژه را از فایل‌های متفاوت می‌خوانند.</span></p>
+        <div class="stage-actions" role="group" aria-label="Example controls / کنترل‌های نمونه">
+          <button type="button" data-stage="1" aria-pressed="false"><span class="pf-en" lang="en">Generate both formats from one rule</span><span class="pf-fa" lang="fa">هر دو قالب را از یک قانون بساز</span><i class="exhibit-arrow" aria-hidden="true"></i></button><button type="button" data-stage="2" aria-pressed="false"><span class="pf-en" lang="en">Maintain two independent copies</span><span class="pf-fa" lang="fa">دو نسخهٔ مستقل نگه دار</span><i class="exhibit-arrow" aria-hidden="true"></i></button>
+        </div>
+        <output class="stage-result" aria-live="polite"><span class="pf-en" lang="en">Try a response to see its effect.</span><span class="pf-fa" lang="fa">یک کار را انتخاب کن و اثرش را ببین.</span></output>
+        <div class="stage-foot">
+          <button type="button" data-stage="0" aria-pressed="true"><span class="pf-en" lang="en">Reset example</span><span class="pf-fa" lang="fa">بازنشانی نمونه</span></button>
+
+        </div>
+      </div>
+    </div>
+   </section>
+    <p class="exhibit-takeaway"><span class="pf-en" lang="en">Change one source rule, regenerate the provider files, and compare the relevant lines in both outputs.</span><span class="pf-fa" lang="fa">یک قانون منبع را تغییر بده، فایل‌های ارائه‌دهنده‌ها را دوباره تولید کن و همان خطوط را در هر دو خروجی مقایسه کن.</span></p>
+    <script type="application/json" data-embed-project>{"entries":[{"id":"agentforge","group":"agents","motif":"layers","color":"#f8b5a1","title":["Carry the same rule into two editors","یک قانون مشترک برای دو ویرایشگر"],"brief":["Two assistants edit one repository, but read their project rules from different files.","دو دستیار یک مخزن را ویرایش می‌کنند، اما قانون پروژه را از فایل‌های متفاوت می‌خوانند."],"actions":[["Generate both formats from one rule","هر دو قالب را از یک قانون بساز"],["Maintain two independent copies","دو نسخهٔ مستقل نگه دار"]],"outcomes":[["The provider files stay aligned when the source rule changes.","وقتی قانون اصلی تغییر می‌کند، فایل‌های ارائه‌دهندگان هماهنگ می‌مانند."],["Each copy can drift as it is edited in isolation.","هر نسخه با ویرایش مستقل ممکن است از دیگری فاصله بگیرد."]],"evidence":[["rule · one project","format · two targets"],["source rule","editor A","editor B"],["copy A · changed","copy B · old"]],"name":"AgentForge","kicker":["Developer toolkit","جعبه‌ابزار توسعه"],"intro":["Keep editor and coding-agent rules in one source, then generate the formats for the clients your team actually uses.","قواعد ادیتورها و ایجنت‌ها را در یک منبع نگه دارید و قالب مشتری‌هایی را تولید کنید که تیم واقعاً استفاده می‌کند."],"hint":["In a disposable checkout, generate rules for two editors and review the outputs before syncing your real project.","در یک نسخهٔ آزمایشی پروژه، قواعد دو ادیتور را تولید کنید و پیش از همگام‌سازی پروژهٔ واقعی، خروجی‌ها را بازبینی کنید."],"site":"/agentforge/","source":"https://github.com/mrzroot/agentforge","layout":"shelf","hue":14,"image":"/assets/thumbs/agentforge.webp"}],"labels":{"map":["Project Atlas","اطلس پروژه‌ها"],"mapIntro":["Four ways to explore the projects. Choose a project to see what it does and open its interactive introduction.","چهار مسیر برای گشتن میان پروژه‌ها. یکی را انتخاب کن تا ببینی چه کار می‌کند و معرفی تعاملی‌اش را باز کنی."],"agents":["AI tooling","ابزارهای هوش مصنوعی"],"language":["Language and data","زبان و داده"],"systems":["Systems","سامانه‌ها"],"showcase":["Design and demos","طراحی و دمو"],"projects":["All projects","همهٔ پروژه‌ها"],"open":["Interactive introduction","معرفی تعاملی"],"test":["Try the example","نمونه را امتحان کن"],"story":["The situation","مسئله"],"reference":["Inspect the project","بررسی پروژه"],"source":["View source on GitHub","کد منبع در گیت‌هاب"],"demo":["Open project website","باز کردن سایت پروژه"],"guide":["Suggested first step","قدم اول پیشنهادی"],"sample":["Illustrative sample","دادهٔ نمونه"],"result":["What happens","نتیجه"],"choose":["Try a response to see its effect.","یک کار را انتخاب کن و اثرش را ببین."],"still":["Initial state","حالت اولیه"],"reset":["Reset example","بازنشانی نمونه"],"more":["Explore another project","یک پروژهٔ دیگر ببین"]}}</script>
+  </div>
 
 <section class="band"><div class="wrap">
   <div class="eyebrow rv"><span lang="en">The problem</span><span lang="fa">مسئله</span></div>
